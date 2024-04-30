@@ -34,6 +34,7 @@ NONLETHAL_HOT_CAVE = EIN("Nonlethal Hot Cave")
 UPGRADED_SKYWARD_STRIKE = EIN("Upgraded Skyward Strike option")
 FS_LAVA_FLOW_OPTION = EIN("FS Lava Flow option")
 SV_UNREQUIRED = EIN("Skyview Unrequired")
+SV_REQUIRED = EIN("Skyview Required")
 ET_UNREQUIRED = EIN("Earth Temple Unrequired")
 LMF_UNREQUIRED = EIN("Lanayru Mining Facility Unrequired")
 AC_UNREQUIRED = EIN("Ancient Cistern Unrequired")
@@ -64,6 +65,7 @@ LOGIC_OPTIONS = dict.fromkeys(
         UPGRADED_SKYWARD_STRIKE,
         FS_LAVA_FLOW_OPTION,
         SV_UNREQUIRED,
+        SV_REQUIRED
         ET_UNREQUIRED,
         LMF_UNREQUIRED,
         AC_UNREQUIRED,
