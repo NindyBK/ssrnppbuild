@@ -382,6 +382,7 @@ class Rando:
             UPGRADED_SKYWARD_STRIKE: self.options["upgraded-skyward-strike"],
             FS_LAVA_FLOW_OPTION: self.options["fs-lava-flow"],
             SV_UNREQUIRED: SV in self.unrequired_dungeons,
+            SV_REQUIRED: SV in self.required_dungeons,
             ET_UNREQUIRED: ET in self.unrequired_dungeons,
             LMF_UNREQUIRED: LMF in self.unrequired_dungeons,
             AC_UNREQUIRED: AC in self.unrequired_dungeons,
