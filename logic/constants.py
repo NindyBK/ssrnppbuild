@@ -65,7 +65,7 @@ LOGIC_OPTIONS = dict.fromkeys(
         UPGRADED_SKYWARD_STRIKE,
         FS_LAVA_FLOW_OPTION,
         SV_UNREQUIRED,
-        SV_REQUIRED
+        SV_REQUIRED,
         ET_UNREQUIRED,
         LMF_UNREQUIRED,
         AC_UNREQUIRED,
