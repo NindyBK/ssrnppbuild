@@ -17,10 +17,10 @@ Main:
   Hub Room:
     exits:
       Past Lava Section:
-        Access to Boulder & ((Wall to Lava Section & Lower Lava Section Portcullis) | Raise Bridge)
+        Access to Boulder & ((Wall to Lava Section & Lower Lava Section Portcullis) | Raise Bridge) | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Earth Temple Unrequired))
       East Room: Access to Boulder
       West Room: Rock to West Room
-      Room with Slopes: Raise Bridge
+      Room with Slopes: Raise Bridge | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Earth Temple Unrequired))
     locations:
       Access to Boulder: First Room - Dislodge Boulder
       First Room - Rupee above Drawbridge: Beetle
@@ -29,8 +29,8 @@ Main:
       Ledd's Gift: Can Defeat Lizalfos
       Rock to West Room: Bomb Bag | Hook Beetle
       Wall to Lava Section: Bomb Bag | (Hook Beetle & Access to Boulder)
-      Rupee in Lava Tunnel: (Wall to Lava Section & Beetle) | (Access to Boulder & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Earth Temple Unrequired)) & Beetle)
-      Lower Lava Section Portcullis: (Wall to Lava Section & Beetle) | (Access to Boulder & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Earth Temple Unrequired)))
+      Rupee in Lava Tunnel: Wall to Lava Section & Beetle
+      Lower Lava Section Portcullis: Wall to Lava Section & Beetle
       Left Peg: Access to Boulder
       Raise Bridge: (Left Peg & Past Lava Section - Right Peg) | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Earth Temple Unrequired) & Left Peg)
 
@@ -40,6 +40,7 @@ Main:
       locations:
         Chest Guarded by Lizalfos: Nothing
         Right Peg: Nothing
+        Rupee in Lava Tunnel: Beetle
 
   East Room:
     exits:
