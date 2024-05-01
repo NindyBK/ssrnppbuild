@@ -36,7 +36,7 @@ Main:
       exits:
         # Can front hop and jump slash
         After Whip Hooks: Sword & Cistern Clip - Misc. Uses Trick
-        After Gutters - Upper Area: After Gutters - Upper Lever
+        After Gutters - Upper Area: After Gutters - Upper Lever | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired))
         Spider Thread Area: Spider Thread Area - Extend Platform | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired))
         Main Room: Nothing
       locations:
@@ -44,7 +44,7 @@ Main:
         Activate Water Geyser: Whip
         Ancient Cistern - Can Lower Statue: Whip
         Main Room - Lever to Block Waterfall: Cistern Clip - Misc. Uses Trick
-        Rupee Under Lilypad: (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired)) | (Beetle & Lilypad Rupee w/Vine Clip Trick)
+        Rupee Under Lilypad: Beetle & Lilypad Rupee w/Vine Clip Trick
 
     Behind the Waterfall:
       exits:
@@ -72,11 +72,11 @@ Main:
           After Gutters: Nothing
           Vines Area: Upper Lever
         locations:
-          Upper Lever: Whip
+          Upper Lever: Whip | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired))
 
     Spider Thread Area:
       exits:
-        Vines Area: Extend Platform
+        Vines Area: Extend Platform | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired))
         Main Room: Nothing
         Basement: Nothing
       locations:
