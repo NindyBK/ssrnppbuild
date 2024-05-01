@@ -24,7 +24,6 @@ def main():
             "WARNING: Running from source, but without git, this is highly discouraged"
         )
     # add options
-
     parser = argparse.ArgumentParser(description="Nindy's Super Evil Randomizer v1.1.0")
     parser.add_argument(
         "--permalink",
