@@ -62,7 +62,7 @@ Main:
         First Trapped Mogma Room: Nothing
         Water Fruit Room: Unlock Key Door
       locations:
-        Unlock Key Door: Fire Sanctuary Small Key x 2 | (Fire Sanctuary Small Key x 3 & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Fire Sanctuary Unrequired)))
+        Unlock Key Door: (Default Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Fire Sanctuary Unrequired)))
 
   First Trapped Mogma Room:
     exits:
@@ -90,7 +90,7 @@ Main:
       Second Chest in Water Fruit Room: Nothing
       Hydrate Frog: Sword
       Room with Water Plant - Unlock Key Door:
-        Fire Sanctuary Small Key x 2 | (Fire Sanctuary Small Key x 3 & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Fire Sanctuary Unrequired))) # Would need better key logic to be exact
+        (Default Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Fire Sanctuary Unrequired))) # Would need better key logic to be exact
 
     After Frog:
       exits:
@@ -117,7 +117,7 @@ Main:
 
       Past Sliding Door:
         exits:
-          Lower Part: Move Sliding Door
+          Lower Part: Move Sliding Door | (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Fire Sanctuary Unrequired))
           Second Bridge - Left: Nothing
 
   Second Bridge:
@@ -126,6 +126,7 @@ Main:
         First Bridge: Unlock Shortcut to First Bridge
         Bottom Part: Nothing
         Right: Clawshots
+        Magmanos Fight Room - Move Sliding Door: Nothing
       locations:
         Unlock Shortcut to First Bridge: Nothing
 
