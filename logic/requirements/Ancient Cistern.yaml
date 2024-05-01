@@ -22,6 +22,7 @@ Main:
       Lever to Block Waterfall: Whip
       Rupee in East Hand: Water Dragon's Scale
       Rupee in West Hand: Water Dragon's Scale
+      Rupee Under Lilypad: Cistern Clip - Misc. Uses Trick & Quick Beetle
 
     After Whip Hooks:
       exits:
@@ -43,7 +44,7 @@ Main:
         Activate Water Geyser: Whip
         Ancient Cistern - Can Lower Statue: Whip
         Main Room - Lever to Block Waterfall: Cistern Clip - Misc. Uses Trick
-        Rupee Under Lilypad: (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired))
+        Rupee Under Lilypad: (Open Dungeon Shortcuts option | (Open Unrequired Shortcuts option & Ancient Cistern Unrequired)) | (Beetle & Lilypad Rupee w/Vine Clip Trick)
 
     Behind the Waterfall:
       exits:
@@ -62,7 +63,7 @@ Main:
         Lower Lever: Nothing
         Flip First Lilypad: Water Dragon's Scale & Whip
         Flip Second Lilypad 1: Flip First Lilypad
-        Rupee under Lilypad: (Flip Second Lilypad 1 & Water Dragon's Scale) | (Clawshots & (Whip | Cistern Clip - Early Basement and Vines Trick) & Beetle & Lilypad Rupee w/Vine Clip Trick) | (Cistern Clip - Misc. Uses Trick & Quick Beetle)
+        Rupee under Lilypad: (Flip Second Lilypad 1 & Water Dragon's Scale) | (Clawshots & Whip)
         Activate Water Geyser: Flip Second Lilypad 1 & Water Dragon's Scale
         Flip Second Lilypad 2: Flip First Lilypad & Activate Water Geyser & Whip
 
@@ -127,8 +128,8 @@ Main:
     exits:
       Inside Statue: Nothing
       Rotating Vines: (Whip & Blow Rock) | Clawshots
-      Spider Thread: Spider Thread - Activate Water Geyser
-      Under the Statue: True Master Sword & Basement Escape w/True Master Sword Trick
+      Spider Thread: Spider Thread - Activate Water Geyser | (True Master Sword & Basement Escape w/True Master Sword Trick)
+      Under the Statue: Nothing
     locations:
       Stop Cursed Waterfall: Beetle
       Blow Rock: Hook Beetle ## Look into putting bomb throws back here?
