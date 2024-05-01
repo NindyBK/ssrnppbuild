@@ -367,6 +367,7 @@ items:
 - Upgraded Skyward Strike option
 - FS Lava Flow option
 - Skyview Unrequired
+- Skyview Required
 - Earth Temple Unrequired
 - Lanayru Mining Facility Unrequired
 - Ancient Cistern Unrequired
@@ -718,6 +719,7 @@ items:
 - \Ancient Cistern\Main\Main Room\Lever to Block Waterfall
 - \Ancient Cistern\Main\Main Room\Rupee in East Hand
 - \Ancient Cistern\Main\Main Room\Rupee in West Hand
+- \Ancient Cistern\Main\Main Room\Rupee Under Lilypad
 - \Ancient Cistern\Main\Main Room\After Whip Hooks\Chest after Whip Hooks
 - \Ancient Cistern\Main\Main Room\Vines Area\Chest near Vines
 - \Ancient Cistern\Main\Main Room\Vines Area\Activate Water Geyser
@@ -771,6 +773,7 @@ items:
 - \Earth Temple\Main\Hub Room\Raise Bridge
 - \Earth Temple\Main\Hub Room\Past Lava Section\Chest Guarded by Lizalfos
 - \Earth Temple\Main\Hub Room\Past Lava Section\Right Peg
+- \Earth Temple\Main\Hub Room\Past Lava Section\Rupee in Lava Tunnel
 - \Earth Temple\Main\East Room\Chest after Double Lizalfos Fight
 - \Earth Temple\Main\West Room\Chest in West Room
 - \Earth Temple\Main\West Room\Rock to Hub Room
@@ -2540,6 +2543,7 @@ areas:
                 Lever to Block Waterfall: Whip
                 Rupee in East Hand: Water Dragon's Scale
                 Rupee in West Hand: Water Dragon's Scale
+                Rupee Under Lilypad: "Cistern Clip - Misc. Uses Trick & \\Quick Beetle"
               name: \Ancient Cistern\Main\Main Room
               sub_areas:
                 After Whip Hooks:
@@ -2570,8 +2574,10 @@ areas:
                   exits:
                     \Ancient Cistern\Main\Main Room\After Whip Hooks: "\\Sword & Cistern\
                       \ Clip - Misc. Uses Trick"
-                    \Ancient Cistern\Main\Main Room\After Gutters\Upper Area: \Ancient
-                      Cistern\Main\Main Room\After Gutters\Upper Area\Upper Lever
+                    \Ancient Cistern\Main\Main Room\After Gutters\Upper Area: "\\\
+                      Ancient Cistern\\Main\\Main Room\\After Gutters\\Upper Area\\\
+                      Upper Lever | Open Dungeon Shortcuts option | (Open Unrequired\
+                      \ Shortcuts option & Ancient Cistern Unrequired)"
                     \Ancient Cistern\Main\Main Room\Spider Thread Area: "\\Ancient\
                       \ Cistern\\Main\\Main Room\\Spider Thread Area\\Extend Platform\
                       \ | Open Dungeon Shortcuts option | (Open Unrequired Shortcuts\
@@ -2584,8 +2590,7 @@ areas:
                     \Ancient Cistern\Can Lower Statue: Whip
                     \Ancient Cistern\Main\Main Room\Lever to Block Waterfall: Cistern
                       Clip - Misc. Uses Trick
-                    Rupee Under Lilypad: "Open Dungeon Shortcuts option | (Open Unrequired\
-                      \ Shortcuts option & Ancient Cistern Unrequired)"
+                    Rupee Under Lilypad: "\\Beetle & Lilypad Rupee w/Vine Clip Trick"
                   name: \Ancient Cistern\Main\Main Room\Vines Area
                   sub_areas: {}
                   toplevel_alias: null
@@ -2631,9 +2636,7 @@ areas:
                       First Lilypad
                     Rupee under Lilypad: "(\\Ancient Cistern\\Main\\Main Room\\After\
                       \ Gutters\\Flip Second Lilypad 1 & Water Dragon's Scale) | (Clawshots\
-                      \ & (Whip | Cistern Clip - Early Basement and Vines Trick) &\
-                      \ \\Beetle & Lilypad Rupee w/Vine Clip Trick) | (Cistern Clip\
-                      \ - Misc. Uses Trick & \\Quick Beetle)"
+                      \ & Whip)"
                     Activate Water Geyser: "\\Ancient Cistern\\Main\\Main Room\\After\
                       \ Gutters\\Flip Second Lilypad 1 & Water Dragon's Scale"
                     Flip Second Lilypad 2: "\\Ancient Cistern\\Main\\Main Room\\After\
@@ -2653,7 +2656,8 @@ areas:
                           Room\After Gutters\Upper Area\Upper Lever
                       hint_region: Ancient Cistern
                       locations:
-                        Upper Lever: Whip
+                        Upper Lever: "Whip | Open Dungeon Shortcuts option | (Open\
+                          \ Unrequired Shortcuts option & Ancient Cistern Unrequired)"
                       name: \Ancient Cistern\Main\Main Room\After Gutters\Upper Area
                       sub_areas: {}
                       toplevel_alias: null
@@ -2665,8 +2669,10 @@ areas:
                   can_sleep: false
                   entrances: []
                   exits:
-                    \Ancient Cistern\Main\Main Room\Vines Area: \Ancient Cistern\Main\Main
-                      Room\Spider Thread Area\Extend Platform
+                    \Ancient Cistern\Main\Main Room\Vines Area: "\\Ancient Cistern\\\
+                      Main\\Main Room\\Spider Thread Area\\Extend Platform | Open\
+                      \ Dungeon Shortcuts option | (Open Unrequired Shortcuts option\
+                      \ & Ancient Cistern Unrequired)"
                     \Ancient Cistern\Main\Main Room: 'True'
                     \Ancient Cistern\Main\Basement: 'True'
                   hint_region: Ancient Cistern
@@ -2775,10 +2781,10 @@ areas:
                 \Ancient Cistern\Main\Inside Statue: 'True'
                 \Ancient Cistern\Main\Basement\Rotating Vines: "(Whip & \\Ancient\
                   \ Cistern\\Main\\Basement\\Blow Rock) | Clawshots"
-                \Ancient Cistern\Main\Basement\Spider Thread: \Ancient Cistern\Main\Basement\Spider
-                  Thread\Activate Water Geyser
-                \Ancient Cistern\Main\Basement\Under the Statue: "\\True Master Sword\
-                  \ & Basement Escape w/True Master Sword Trick"
+                \Ancient Cistern\Main\Basement\Spider Thread: "\\Ancient Cistern\\\
+                  Main\\Basement\\Spider Thread\\Activate Water Geyser | (\\True Master\
+                  \ Sword & Basement Escape w/True Master Sword Trick)"
+                \Ancient Cistern\Main\Basement\Under the Statue: 'True'
               hint_region: Ancient Cistern
               locations:
                 Stop Cursed Waterfall: \Beetle
@@ -2956,16 +2962,19 @@ areas:
               can_sleep: false
               entrances: []
               exits:
-                \Earth Temple\Main\Hub Room\Past Lava Section: "\\Earth Temple\\Main\\\
-                  Hub Room\\Access to Boulder & ((\\Earth Temple\\Main\\Hub Room\\\
-                  Wall to Lava Section & \\Earth Temple\\Main\\Hub Room\\Lower Lava\
-                  \ Section Portcullis) | \\Earth Temple\\Main\\Hub Room\\Raise Bridge)"
+                \Earth Temple\Main\Hub Room\Past Lava Section: "(\\Earth Temple\\\
+                  Main\\Hub Room\\Access to Boulder & ((\\Earth Temple\\Main\\Hub\
+                  \ Room\\Wall to Lava Section & \\Earth Temple\\Main\\Hub Room\\\
+                  Lower Lava Section Portcullis) | \\Earth Temple\\Main\\Hub Room\\\
+                  Raise Bridge)) | Open Dungeon Shortcuts option | (Open Unrequired\
+                  \ Shortcuts option & Earth Temple Unrequired)"
                 \Earth Temple\Main\East Room: \Earth Temple\Main\Hub Room\Access to
                   Boulder
                 \Earth Temple\Main\West Room: \Earth Temple\Main\Hub Room\Rock to
                   West Room
-                \Earth Temple\Main\Room with Slopes: \Earth Temple\Main\Hub Room\Raise
-                  Bridge
+                \Earth Temple\Main\Room with Slopes: "\\Earth Temple\\Main\\Hub Room\\\
+                  Raise Bridge | Open Dungeon Shortcuts option | (Open Unrequired\
+                  \ Shortcuts option & Earth Temple Unrequired)"
               hint_region: Earth Temple
               locations:
                 Access to Boulder: \Earth Temple\Main\First Room\Dislodge Boulder
@@ -2978,14 +2987,10 @@ areas:
                 Rock to West Room: "Bomb Bag | \\Hook Beetle"
                 Wall to Lava Section: "Bomb Bag | (\\Hook Beetle & \\Earth Temple\\\
                   Main\\Hub Room\\Access to Boulder)"
-                Rupee in Lava Tunnel: "(\\Earth Temple\\Main\\Hub Room\\Wall to Lava\
-                  \ Section & \\Beetle) | (\\Earth Temple\\Main\\Hub Room\\Access\
-                  \ to Boulder & (Open Dungeon Shortcuts option | (Open Unrequired\
-                  \ Shortcuts option & Earth Temple Unrequired)) & \\Beetle)"
-                Lower Lava Section Portcullis: "(\\Earth Temple\\Main\\Hub Room\\\
-                  Wall to Lava Section & \\Beetle) | (\\Earth Temple\\Main\\Hub Room\\\
-                  Access to Boulder & (Open Dungeon Shortcuts option | (Open Unrequired\
-                  \ Shortcuts option & Earth Temple Unrequired)))"
+                Rupee in Lava Tunnel: "\\Earth Temple\\Main\\Hub Room\\Wall to Lava\
+                  \ Section & \\Beetle"
+                Lower Lava Section Portcullis: "\\Earth Temple\\Main\\Hub Room\\Wall\
+                  \ to Lava Section & \\Beetle"
                 Left Peg: \Earth Temple\Main\Hub Room\Access to Boulder
                 Raise Bridge: "(\\Earth Temple\\Main\\Hub Room\\Left Peg & \\Earth\
                   \ Temple\\Main\\Hub Room\\Past Lava Section\\Right Peg) | Open Dungeon\
@@ -3005,6 +3010,7 @@ areas:
                   locations:
                     Chest Guarded by Lizalfos: 'True'
                     Right Peg: 'True'
+                    Rupee in Lava Tunnel: \Beetle
                   name: \Earth Temple\Main\Hub Room\Past Lava Section
                   sub_areas: {}
                   toplevel_alias: null
@@ -4676,9 +4682,10 @@ areas:
                       with Water Plant\Past Lava\Unlock Key Door
                   hint_region: Fire Sanctuary
                   locations:
-                    Unlock Key Door: "Fire Sanctuary Small Key x 2 | (Fire Sanctuary\
-                      \ Small Key x 3 & (Open Dungeon Shortcuts option | (Open Unrequired\
-                      \ Shortcuts option & Fire Sanctuary Unrequired)))"
+                    Unlock Key Door: "(Default Dungeon Behavior option & Fire Sanctuary\
+                      \ Small Key x 2) | (Fire Sanctuary Small Key x 3 & (Open Dungeon\
+                      \ Shortcuts option | (Open Unrequired Shortcuts option & Fire\
+                      \ Sanctuary Unrequired)))"
                   name: \Fire Sanctuary\Main\Room with Water Plant\Past Lava
                   sub_areas: {}
                   toplevel_alias: null
@@ -4736,10 +4743,10 @@ areas:
                 First Chest in Water Fruit Room: 'True'
                 Second Chest in Water Fruit Room: 'True'
                 Hydrate Frog: \Sword
-                \Fire Sanctuary\Main\Room with Water Plant\Past Lava\Unlock Key Door: "Fire\
-                  \ Sanctuary Small Key x 2 | (Fire Sanctuary Small Key x 3 & (Open\
-                  \ Dungeon Shortcuts option | (Open Unrequired Shortcuts option &\
-                  \ Fire Sanctuary Unrequired)))"
+                \Fire Sanctuary\Main\Room with Water Plant\Past Lava\Unlock Key Door: "(Default\
+                  \ Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire\
+                  \ Sanctuary Small Key x 3 & (Open Dungeon Shortcuts option | (Open\
+                  \ Unrequired Shortcuts option & Fire Sanctuary Unrequired)))"
               name: \Fire Sanctuary\Main\Water Fruit Room
               sub_areas:
                 After Frog:
@@ -4816,9 +4823,10 @@ areas:
                       can_sleep: false
                       entrances: []
                       exits:
-                        \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: \Fire
-                          Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding
-                          Door
+                        \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: "\\Fire\
+                          \ Sanctuary\\Main\\Magmanos Fight Room\\Lower Part\\Move\
+                          \ Sliding Door | Open Dungeon Shortcuts option | (Open Unrequired\
+                          \ Shortcuts option & Fire Sanctuary Unrequired)"
                         \Fire Sanctuary\Main\Second Bridge\Left: 'True'
                       hint_region: Fire Sanctuary
                       locations: {}
@@ -4850,6 +4858,7 @@ areas:
                       Bridge\Left\Unlock Shortcut to First Bridge
                     \Fire Sanctuary\Main\Second Bridge\Bottom Part: 'True'
                     \Fire Sanctuary\Main\Second Bridge\Right: Clawshots
+                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding Door: 'True'
                   hint_region: Fire Sanctuary
                   locations:
                     Unlock Shortcut to First Bridge: 'True'
@@ -8564,10 +8573,11 @@ areas:
               hint_region: Skyview
               locations:
                 \Skyview\Main\First Room\Destroy Barricade: 'True'
-                Switch to Left Room: "(Default Dungeon Behavior option & (\\Can Hit\
-                  \ Switch | (\\Skyview\\Main\\First Hub\\One Water Raise & Water\
-                  \ Dragon's Scale))) | ((Open Dungeon Shortcuts option | (Open Unrequired\
-                  \ Shortcuts option & Skyview Unrequired)) & Water Dragon's Scale)"
+                Switch to Left Room: "((Default Dungeon Behavior option | (Open Unrequired\
+                  \ Shortcuts option & Skyview Required)) & (\\Can Hit Switch | (\\\
+                  Skyview\\Main\\First Hub\\One Water Raise & Water Dragon's Scale)))\
+                  \ | ((Open Dungeon Shortcuts option | (Open Unrequired Shortcuts\
+                  \ option & Skyview Unrequired)) & Water Dragon's Scale)"
                 Switch to Right Room: \Skyview\Can Hit High Skyview Switches
                 One Water Raise: "\\Skyview\\Main\\First Hub\\Left Room\\Raise Water\
                   \ | \\Skyview\\Main\\First Hub\\Right Room\\After Crawlspace\\Raise\
