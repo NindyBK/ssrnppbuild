@@ -4858,7 +4858,7 @@ areas:
                       Bridge\Left\Unlock Shortcut to First Bridge
                     \Fire Sanctuary\Main\Second Bridge\Bottom Part: 'True'
                     \Fire Sanctuary\Main\Second Bridge\Right: Clawshots
-                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding Door: 'True'
+                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Past Sliding Door: 'True'
                   hint_region: Fire Sanctuary
                   locations:
                     Unlock Shortcut to First Bridge: 'True'
