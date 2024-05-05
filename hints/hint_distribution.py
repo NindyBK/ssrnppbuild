@@ -29,12 +29,8 @@ HINTABLE_ITEMS = (
 )
 
 JUNK_TEXT = [
-    "They say whenever Spiral Charge is on a trial, a seed roller goes mysteriously missing",
-    "They say that Mogmas don't understand Minesweeper",
     "They say that you can win a race by abandoning Lanayru to check Cawlin's Letter",
     'They say that there is something called a "hash" that makes it easier for people to verify that they are playing the right seed',
-    "They say that the bad seed rollers are still in the car, seeking for a safe refuge",
-    "Have you heard the tragedy of Darth Kolok the Pause? I thought not, it's not a story the admins would tell you",
     "Lanayru Sand Sea is the most hated region in the game, because Sand is coarse, rough and gets everywhere",
     "... astronomically ...",
     "They say that you look like you have a Questions",
