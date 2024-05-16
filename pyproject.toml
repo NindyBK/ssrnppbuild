@@ -4,8 +4,8 @@ extend-exclude = 'gui\/(.*\/)*ui_.*.py'
 
 [tool.poetry]
 name = "ssrando"
-version = "1.1.0"
-description = "Skyward Sword Randomizer [NPP]"
+version = "N1.0.9"
+description = "Skyward Sword Randomizer"
 authors = []
 readme = "README.md"
 license = "MIT"
