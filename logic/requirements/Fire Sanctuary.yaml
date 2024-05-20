@@ -7,7 +7,6 @@ Main:
       Main Exit: Nothing
     locations:
       Hit Water Plant: Distance Activator | Bomb Bag
-      Magmanos Fight Room - Lower Part - Move Sliding Door: Fire Sanctuary Shortcuts
 
     Past Water Plant:
       entrance: Hit Water Plant
