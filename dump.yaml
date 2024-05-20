@@ -4864,7 +4864,8 @@ areas:
                       Bridge\Left\Unlock Shortcut to First Bridge
                     \Fire Sanctuary\Main\Second Bridge\Bottom Part: 'True'
                     \Fire Sanctuary\Main\Second Bridge\Right: Clawshots
-                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Past Sliding Door: 'True'
+                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: \Fire Sanctuary
+                      Shortcuts
                   hint_region: Fire Sanctuary
                   locations:
                     Unlock Shortcut to First Bridge: 'True'
@@ -5327,8 +5328,9 @@ areas:
                     \Lanayru Mining Facility\Main\Big Hub\Between Wind Gates: "\\\
                       Lanayru Mining Facility\\Main\\Big Hub\\Between Wind Gates\\\
                       Open First Wind Gate | \\Mining Facility Shortcuts"
-                    \Lanayru Mining Facility\Main\Big Hub\Near Exit to Hop Across Boxes Room: \Mining
-                      Facility Shortcuts
+                    \Lanayru Mining Facility\Main\Big Hub\Near Exit to Hop Across Boxes Room: 'True'
+                    \Lanayru Mining Facility\Main\Hop Across Boxes Room: \Mining Facility
+                      Shortcuts
                   hint_region: Lanayru Mining Facility
                   locations:
                     Blow Up Boxes: "Bomb Bag | \\Hook Beetle"
