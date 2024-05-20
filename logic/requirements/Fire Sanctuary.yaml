@@ -90,7 +90,7 @@ Main:
       Second Chest in Water Fruit Room: Nothing
       Hydrate Frog: Sword
       Room with Water Plant - Unlock Key Door:
-        (Default Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & Fire Sanctuary Shortcuts) # Would need better key logic to be exact
+        (Cutless Fire Sanctuary & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & Fire Sanctuary Shortcuts) # Would need better key logic to be exact
 
     After Frog:
       exits:
@@ -126,7 +126,7 @@ Main:
         First Bridge: Unlock Shortcut to First Bridge
         Bottom Part: Nothing
         Right: Clawshots
-        Magmanos Fight Room - Lower Part: Fire Sanctuary Shortcuts
+        Magmanos Fight Room - Lower Part - Past Sliding Door: Nothing
       locations:
         Unlock Shortcut to First Bridge: Nothing
 
