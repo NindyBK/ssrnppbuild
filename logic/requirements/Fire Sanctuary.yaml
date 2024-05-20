@@ -7,6 +7,7 @@ Main:
       Main Exit: Nothing
     locations:
       Hit Water Plant: Distance Activator | Bomb Bag
+      Magmanos Fight Room - Lower Part - Move Sliding Door: Fire Sanctuary Shortcuts
 
     Past Water Plant:
       entrance: Hit Water Plant
@@ -62,7 +63,7 @@ Main:
         First Trapped Mogma Room: Nothing
         Water Fruit Room: Unlock Key Door
       locations:
-        Unlock Key Door: (Default Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & Fire Sanctuary Shortcuts)
+        Unlock Key Door: (Cutless Fire Sanctuary & Fire Sanctuary Small Key x 2) | (Fire Sanctuary Small Key x 3 & Fire Sanctuary Shortcuts)
 
   First Trapped Mogma Room:
     exits:
