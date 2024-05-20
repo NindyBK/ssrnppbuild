@@ -384,10 +384,15 @@ class Rando:
             SV_UNREQUIRED: SV in self.unrequired_dungeons,
             SV_REQUIRED: SV in self.required_dungeons,
             ET_UNREQUIRED: ET in self.unrequired_dungeons,
+            ET_REQUIRED: ET in self.required_dungeons,
             LMF_UNREQUIRED: LMF in self.unrequired_dungeons,
+            LMF_REQUIRED: LMF in self.required_dungeons,
             AC_UNREQUIRED: AC in self.unrequired_dungeons,
+            AC_REQUIRED: AC in self.required_dungeons,
             SSH_UNREQUIRED: SSH in self.unrequired_dungeons,
+            SSH_REQUIRED: SSH in self.required_dungeons,
             FS_UNREQUIRED: FS in self.unrequired_dungeons,
+            FS_REQUIRED: FS in self.required_dungeons,
         }
 
         enabled_tricks = set(self.options["enabled-tricks-bitless"])
