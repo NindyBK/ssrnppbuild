@@ -719,6 +719,7 @@ items:
 - \Sandship Shortcuts
 - \Fire Sanctuary Shortcuts
 - \Cutless Skyview
+- \Cutless Fire Sanctuary
 - \Ancient Cistern\Can Lower Statue
 - \Ancient Cistern\Can Freely Raise and Lower Statue
 - \Ancient Cistern\Main\Main Room\Lock Combination Knowledge
@@ -2507,6 +2508,8 @@ areas:
       \ option & Fire Sanctuary Unrequired)"
     Cutless Skyview: "Default Dungeon Behavior option | (Open Unrequired Shortcuts\
       \ option & Skyview Required)"
+    Cutless Fire Sanctuary: "Default Dungeon Behavior option | (Open Unrequired Shortcuts\
+      \ option & Fire Sanctuary Required)"
   name: ''
   sub_areas:
     Ancient Cistern:
@@ -4566,6 +4569,8 @@ areas:
               hint_region: Fire Sanctuary
               locations:
                 Hit Water Plant: "\\Distance Activator | Bomb Bag"
+                \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding Door: \Fire
+                  Sanctuary Shortcuts
               name: \Fire Sanctuary\Main\First Room
               sub_areas:
                 Past Water Plant:
@@ -4691,8 +4696,8 @@ areas:
                       with Water Plant\Past Lava\Unlock Key Door
                   hint_region: Fire Sanctuary
                   locations:
-                    Unlock Key Door: "(Default Dungeon Behavior option & Fire Sanctuary\
-                      \ Small Key x 2) | (Fire Sanctuary Small Key x 3 & \\Fire Sanctuary\
+                    Unlock Key Door: "(\\Cutless Fire Sanctuary & Fire Sanctuary Small\
+                      \ Key x 2) | (Fire Sanctuary Small Key x 3 & \\Fire Sanctuary\
                       \ Shortcuts)"
                   name: \Fire Sanctuary\Main\Room with Water Plant\Past Lava
                   sub_areas: {}
@@ -4751,9 +4756,9 @@ areas:
                 First Chest in Water Fruit Room: 'True'
                 Second Chest in Water Fruit Room: 'True'
                 Hydrate Frog: \Sword
-                \Fire Sanctuary\Main\Room with Water Plant\Past Lava\Unlock Key Door: "(Default\
-                  \ Dungeon Behavior option & Fire Sanctuary Small Key x 2) | (Fire\
-                  \ Sanctuary Small Key x 3 & \\Fire Sanctuary Shortcuts)"
+                \Fire Sanctuary\Main\Room with Water Plant\Past Lava\Unlock Key Door: "(\\\
+                  Cutless Fire Sanctuary & Fire Sanctuary Small Key x 2) | (Fire Sanctuary\
+                  \ Small Key x 3 & \\Fire Sanctuary Shortcuts)"
               name: \Fire Sanctuary\Main\Water Fruit Room
               sub_areas:
                 After Frog:
@@ -4864,8 +4869,7 @@ areas:
                       Bridge\Left\Unlock Shortcut to First Bridge
                     \Fire Sanctuary\Main\Second Bridge\Bottom Part: 'True'
                     \Fire Sanctuary\Main\Second Bridge\Right: Clawshots
-                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: \Fire Sanctuary
-                      Shortcuts
+                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Past Sliding Door: 'True'
                   hint_region: Fire Sanctuary
                   locations:
                     Unlock Shortcut to First Bridge: 'True'
