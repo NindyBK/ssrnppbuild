@@ -2515,6 +2515,8 @@ areas:
       \ option & Skyview Required)"
     Cutless Fire Sanctuary: "Default Dungeon Behavior option | (Open Unrequired Shortcuts\
       \ option & Fire Sanctuary Required)"
+    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding Door: \Fire Sanctuary
+      Shortcuts
   name: ''
   sub_areas:
     Ancient Cistern:
@@ -4574,8 +4576,6 @@ areas:
               hint_region: Fire Sanctuary
               locations:
                 Hit Water Plant: "\\Distance Activator | Bomb Bag"
-                \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part\Move Sliding Door: \Fire
-                  Sanctuary Shortcuts
               name: \Fire Sanctuary\Main\First Room
               sub_areas:
                 Past Water Plant:
