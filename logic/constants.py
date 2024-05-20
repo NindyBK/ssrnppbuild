@@ -36,10 +36,15 @@ FS_LAVA_FLOW_OPTION = EIN("FS Lava Flow option")
 SV_UNREQUIRED = EIN("Skyview Unrequired")
 SV_REQUIRED = EIN("Skyview Required")
 ET_UNREQUIRED = EIN("Earth Temple Unrequired")
+ET_REQUIRED = EIN("Earth Temple Required")
 LMF_UNREQUIRED = EIN("Lanayru Mining Facility Unrequired")
+LMF_REQUIRED = EIN("Lanayru Mining Facility Required")
 AC_UNREQUIRED = EIN("Ancient Cistern Unrequired")
+AC_REQUIRED = EIN("Ancient Cistern Required")
 SSH_UNREQUIRED = EIN("Sandship Unrequired")
+SSH_REQUIRED = EIN("Sandship Required")
 FS_UNREQUIRED = EIN("Fire Sanctuary Unrequired")
+FS_REQUIRED = EIN("Fire Sanctuary Required")
 
 GOT_OPENING_REQUIREMENT = EIN("GoT Opening Requirement")
 GOT_RAISING_REQUIREMENT = EIN("GoT Raising Requirement")
@@ -67,10 +72,15 @@ LOGIC_OPTIONS = dict.fromkeys(
         SV_UNREQUIRED,
         SV_REQUIRED,
         ET_UNREQUIRED,
+        ET_REQUIRED,
         LMF_UNREQUIRED,
+        LMF_REQUIRED,
         AC_UNREQUIRED,
+        AC_REQUIRED,
         SSH_UNREQUIRED,
+        SSH_REQUIRED,
         FS_UNREQUIRED,
+        FS_REQUIRED,
         GOT_OPENING_REQUIREMENT,
         GOT_RAISING_REQUIREMENT,
         HORDE_DOOR_REQUIREMENT,
