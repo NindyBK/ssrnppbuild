@@ -4734,9 +4734,9 @@ areas:
                       Fight Room\Upper Part\Magmanos Fight
                     \Fire Sanctuary\Main\Magmanos Fight Room\Upper Part: \Fire Sanctuary\Main\Magmanos
                       Fight Room\Upper Part\Magmanos Fight
-                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: "(\\Mogma\
+                    \Fire Sanctuary\Main\Magmanos Fight Room\Lower Part: "\\Mogma\
                       \ Mitts & \\Fire Sanctuary\\Main\\First Trapped Mogma Room\\\
-                      Lower Area\\Blow up Rock in Tunnel) | \\Fire Sanctuary Shortcuts"
+                      Lower Area\\Blow up Rock in Tunnel"
                   hint_region: Fire Sanctuary
                   locations:
                     Rescue First Trapped Mogma: 'True'
@@ -4966,8 +4966,8 @@ areas:
                   \ of Boss Door\\Past Plats\\Release Lava"
                 \Fire Sanctuary\Main\West of Boss Door\Past Plats: "(\\Fire Sanctuary\\\
                   Main\\West of Boss Door\\Catch Plats & (\\Distance Activator | Bomb\
-                  \ Bag)) | \\Fire Sanctuary\\Main\\West of Boss Door\\Past Plats\\\
-                  Unlock Shortcut to Pre Plats"
+                  \ Bag)) | \\Fire Sanctuary Shortcuts | \\Fire Sanctuary\\Main\\\
+                  West of Boss Door\\Past Plats\\Unlock Shortcut to Pre Plats"
               hint_region: Fire Sanctuary
               locations:
                 Hit Water Plant: "\\Distance Activator | Bomb Bag"
