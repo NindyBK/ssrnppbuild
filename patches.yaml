@@ -144,8 +144,6 @@ global:
       - onlyif: Option "open-shortcuts" Is "All Dungeons" | (Option "open-shortcuts" Is "Unrequired Dungeons Only" & Dungeon "Ancient Cistern" Not Required)
         flag: 6 # Water Spout to Upper Level Opened
       - 7 # Cutscene for Shortcut Mentioned Above
-      - 32 # Water Vortex Cutscenes
-      - 39 # Water Vortex Cutscenes
       - onlyif: Option "open-shortcuts" Is "All Dungeons" | (Option "open-shortcuts" Is "Unrequired Dungeons Only" & Dungeon "Ancient Cistern" Not Required)
         flag: 42 # Water Spout near Basement Rope
       - onlyif: Option "open-shortcuts" Is "All Dungeons" | (Option "open-shortcuts" Is "Unrequired Dungeons Only" & Dungeon "Ancient Cistern" Not Required)
