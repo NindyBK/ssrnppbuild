@@ -1924,6 +1924,7 @@ Sky Keep - Sacred Power of Nayru:
    type:
    Paths:
     - stage/D003_8/r0/l1/Item/62
+   hint: sometimes
    text: overcoming a true <y<test of wisdom>> grants
 Sky Keep - Sacred Power of Farore:
    original item: Triforce of Courage
