@@ -11,7 +11,6 @@
      "Eldin Volcano - Gossip Stone in Lower Platform Cave"
   ],
   "added_locations": [
-    {"location": "Earth Temple - Rupee in Lava Tunnel",                      "type": "always"}
   ],
   "removed_locations": [
   ],
@@ -20,7 +19,8 @@
     {"name": "Triforce of Wisdom", "amount": 1},
     {"name": "Triforce of Power", "amount": 1},
     {"name": "Ballad of the Goddess", "amount": 1},
-    {"name": "Tumbleweed", "amount": 1}
+    {"name": "Lanayru Caves Small Key", "amount": 1},
+    {"name": "Stone of Trials", "amount": 1}
 ],
   "removed_items": [
     {"name": "Clawshots", "type": "item"},
