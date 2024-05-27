@@ -254,12 +254,6 @@ class Rando:
                 self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[dungeon]))
                 for dungeon in self.unrequired_dungeons
             )
-
-            if (
-                not self.options["triforce-required"]
-                or self.options["triforce-shuffle"] == "Anywhere"
-            ):
-                self.banned.append(self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[SK])))
         # ban the forced vanilla relic checks to ensure songs can be counted as nonprogress items if the rewards are also off
 
         if not self.options["treasuresanity-in-silent-realms"]:
