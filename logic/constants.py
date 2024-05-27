@@ -161,7 +161,7 @@ DUNGEON_COLORS = {
 }
 
 REGULAR_DUNGEONS = [SV, ET, LMF, AC, SSH, FS]
-ALL_DUNGEONS = REGULAR_DUNGEONS + [SK]
+ALL_DUNGEONS = REGULAR_DUNGEONS
 
 SV_ENTRANCE = "Dungeon Entrance in Deep Woods"
 ET_ENTRANCE = "Dungeon Entrance in Eldin Volcano"
