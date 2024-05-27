@@ -56,8 +56,6 @@ Upper Skyloft - In Zelda's Closet:
   type:
   Paths:
     - stage/F001r/r6/l0/chest/32 #sceneflag
-  hint:
-    sometimes: Option "random-start-entrance" Is Not "Vanilla"
   text: digging through your <b<true love's room>> awards you with
 Upper Skyloft - Owlan's Crystals:
   original item: Gratitude Crystal Pack
@@ -171,7 +169,6 @@ Central Skyloft - Item in Bird Nest:
   type:
   Paths:
     - stage/F000/r0/l0/Item/13
-  hint: sometimes
   text: some <r<birds on Skyloft>> left behind
 Central Skyloft - Shed Chest:
   original item: Silver Rupee
@@ -1269,7 +1266,6 @@ Lanayru Gorge - Digging Spot:
   type:
   Paths:
     - stage/F302/r0/l0/Soil/30
-  hint: sometimes
   text: <b+<time travelling>> to dig reveals
 
 # Lanayru Sand Sea:
@@ -1497,6 +1493,7 @@ Earth Temple - Rupee in Lava Tunnel:
   type: Rupees (No Quick Beetle)
   Paths:
     - stage/D200/r2/l0/Item/21
+  hint: sometimes
   text: hidden within the <r+<neck of a dragon>> rests
 Earth Temple - Chest Guarded by Lizalfos:
   original item: Red Rupee
