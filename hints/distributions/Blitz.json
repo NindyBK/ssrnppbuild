@@ -12,17 +12,17 @@
   ],
   "added_locations": [
     {"location": "Upper Skyloft - Fledge's Crystals",                        "type": "always"},
-    {"location": "Earth Temple - Rupee in Lava Tunnel",                      "type": "always"},
     {"location": "Sandship - Chest at the Stern",                         "type": "sometimes"},
-    {"location": "Faron Woods - Item behind Lower Bombable Rock",         "type": "sometimes"}
+    {"location": "Faron Woods - Item behind Lower Bombable Rock",         "type": "sometimes"},
+    {"location": "Central Skyloft - Item in Bird Nest",                   "type": "sometimes"},
+    {"location": "Lanayru Gorge - Digging Spot",                          "type": "sometimes"}
   ],
   "removed_locations": [
   ],
   "added_items": [
     {"name": "Triforce of Courage", "amount": 1},
     {"name": "Triforce of Wisdom", "amount": 1},
-    {"name": "Triforce of Power", "amount": 1},
-    {"name": "Tumbleweed", "amount": 1}
+    {"name": "Triforce of Power", "amount": 1}
 ],
   "removed_items": [
     {"name": "Clawshots", "type": "item"},
