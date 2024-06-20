@@ -376,15 +376,40 @@ class Ui_MainWindow(object):
 
         self.vlay_rs.addLayout(self.hlay_rs_controls)
 
+        self.hlay_rs_settings = QHBoxLayout()
+        self.hlay_rs_settings.setObjectName(u"hlay_rs_settings")
+        self.vlay_rs_weighting = QVBoxLayout()
+        self.vlay_rs_weighting.setObjectName(u"vlay_rs_weighting")
         self.label_random_settings_weighting = QLabel(self.box_rs)
         self.label_random_settings_weighting.setObjectName(u"label_random_settings_weighting")
 
-        self.vlay_rs.addWidget(self.label_random_settings_weighting)
+        self.vlay_rs_weighting.addWidget(self.label_random_settings_weighting)
 
         self.option_random_settings_weighting = QComboBox(self.box_rs)
         self.option_random_settings_weighting.setObjectName(u"option_random_settings_weighting")
 
-        self.vlay_rs.addWidget(self.option_random_settings_weighting)
+        self.vlay_rs_weighting.addWidget(self.option_random_settings_weighting)
+
+
+        self.hlay_rs_settings.addLayout(self.vlay_rs_weighting)
+
+        self.vlay_rs_progression_locations = QVBoxLayout()
+        self.vlay_rs_progression_locations.setObjectName(u"vlay_rs_progression_locations")
+        self.label_progression_locations = QLabel(self.box_rs)
+        self.label_progression_locations.setObjectName(u"label_progression_locations")
+
+        self.vlay_rs_progression_locations.addWidget(self.label_progression_locations)
+
+        self.edit_progression_groups = QPushButton(self.box_rs)
+        self.edit_progression_groups.setObjectName(u"edit_progression_groups")
+
+        self.vlay_rs_progression_locations.addWidget(self.edit_progression_groups)
+
+
+        self.hlay_rs_settings.addLayout(self.vlay_rs_progression_locations)
+
+
+        self.vlay_rs.addLayout(self.hlay_rs_settings)
 
 
         self.horizontalLayout_12.addLayout(self.vlay_rs)
@@ -596,6 +621,11 @@ class Ui_MainWindow(object):
 
         self.vlay_open.addWidget(self.option_open_lake_floria)
 
+        self.option_random_puzzles = QCheckBox(self.box_open)
+        self.option_random_puzzles.setObjectName(u"option_random_puzzles")
+
+        self.vlay_open.addWidget(self.option_random_puzzles)
+
         self.vspace_open = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.vlay_open.addItem(self.vspace_open)
@@ -614,6 +644,21 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.vlay_shuffles = QVBoxLayout()
         self.vlay_shuffles.setObjectName(u"vlay_shuffles")
+        self.vlay_batreaux_counts = QVBoxLayout()
+        self.vlay_batreaux_counts.setObjectName(u"vlay_batreaux_counts")
+        self.label_for_option_batreaux_counts = QLabel(self.box_shuffles)
+        self.label_for_option_batreaux_counts.setObjectName(u"label_for_option_batreaux_counts")
+
+        self.vlay_batreaux_counts.addWidget(self.label_for_option_batreaux_counts)
+
+        self.option_batreaux_counts = QComboBox(self.box_shuffles)
+        self.option_batreaux_counts.setObjectName(u"option_batreaux_counts")
+
+        self.vlay_batreaux_counts.addWidget(self.option_batreaux_counts)
+
+
+        self.vlay_shuffles.addLayout(self.vlay_batreaux_counts)
+
         self.option_shopsanity = QCheckBox(self.box_shuffles)
         self.option_shopsanity.setObjectName(u"option_shopsanity")
 
@@ -2062,7 +2107,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(6)
         self.option_triforce_shuffle.setCurrentIndex(-1)
         self.option_randomize_entrances.setCurrentIndex(-1)
         self.option_chest_dowsing.setCurrentIndex(-1)
@@ -2108,6 +2153,8 @@ class Ui_MainWindow(object):
         self.option_random_settings.setText(QCoreApplication.translate("MainWindow", u"Randomize Game Settings", None))
         self.option_random_cosmetics.setText(QCoreApplication.translate("MainWindow", u"Randomize Cosmetic Settings", None))
         self.label_random_settings_weighting.setText(QCoreApplication.translate("MainWindow", u"Random Settings Weighting", None))
+        self.label_progression_locations.setText(QCoreApplication.translate("MainWindow", u"Randomized Progression Locations", None))
+        self.edit_progression_groups.setText(QCoreApplication.translate("MainWindow", u"Edit Progression Locations", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_setup), QCoreApplication.translate("MainWindow", u"Setup", None))
 #if QT_CONFIG(tooltip)
         self.tab_randomization_settings.setToolTip("")
@@ -2130,7 +2177,9 @@ class Ui_MainWindow(object):
         self.option_open_et.setText(QCoreApplication.translate("MainWindow", u"Open Earth Temple", None))
         self.label_for_option_open_lmf.setText(QCoreApplication.translate("MainWindow", u"Open Lanayru Mining Facility", None))
         self.label_for_option_open_lake_floria.setText(QCoreApplication.translate("MainWindow", u"Open Lake Floria", None))
+        self.option_random_puzzles.setText(QCoreApplication.translate("MainWindow", u"Randomize Puzzles", None))
         self.box_shuffles.setTitle(QCoreApplication.translate("MainWindow", u"Shuffles", None))
+        self.label_for_option_batreaux_counts.setText(QCoreApplication.translate("MainWindow", u"Batreaux Crystal Counts", None))
         self.option_shopsanity.setText(QCoreApplication.translate("MainWindow", u"Shuffle Beedle's Shop", None))
         self.option_rupeesanity.setText(QCoreApplication.translate("MainWindow", u"Rupeesanity", None))
         self.option_tadtonesanity.setText(QCoreApplication.translate("MainWindow", u"Tadtonesanity", None))

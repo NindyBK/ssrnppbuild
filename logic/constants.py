@@ -45,6 +45,7 @@ SSH_UNREQUIRED = EIN("Sandship Unrequired")
 SSH_REQUIRED = EIN("Sandship Required")
 FS_UNREQUIRED = EIN("Fire Sanctuary Unrequired")
 FS_REQUIRED = EIN("Fire Sanctuary Required")
+NO_RANDOM_PUZZLES_OPTION = EIN("No Random Puzzles option")
 
 GOT_OPENING_REQUIREMENT = EIN("GoT Opening Requirement")
 GOT_RAISING_REQUIREMENT = EIN("GoT Raising Requirement")
@@ -81,6 +82,7 @@ LOGIC_OPTIONS = dict.fromkeys(
         SSH_REQUIRED,
         FS_UNREQUIRED,
         FS_REQUIRED,
+        NO_RANDOM_PUZZLES_OPTION,
         GOT_OPENING_REQUIREMENT,
         GOT_RAISING_REQUIREMENT,
         HORDE_DOOR_REQUIREMENT,
@@ -91,6 +93,8 @@ NON_RANDOMIZED_SETTINGS = [
     # If permalink is false, it is not randomized
     "random-settings",
     "random-settings-weighting",
+    "random-progression-groups",
+    "disabled-progression-groups",
     "no-spoiler-log",
     "bit-patches",
     "logic-mode",
@@ -109,6 +113,25 @@ NON_RANDOMIZED_COSMETICS = [
     "no-enemy-music",
     "selected-player-model-pack",
     "selected-loftwing-model-pack",
+]
+
+RS_PROGRESSION_GROUPS = [
+    # (Group, hint text**)
+    # **Hint text: They say that those [text] will find nothing for their quest. (Hint stone)
+    # ** My readings indicate that [text] will be of no help for your quest. (Fi)
+    ("Goddess Chests", "uncovering the Goddess' treasures"),
+    ("Silent Realms", "entering the Goddess' trials"),
+    ("Combat", "engaging in combat"),
+    ("Minigames", "winning minigames"),
+    ("Short Sidequests", "helping with short requests"),
+    ("Long Sidequests", "helping with long requests"),
+    ("Scrapper Deliveries", "transporting objects above the clouds"),
+    ("Batreaux's Rewards (30 & below)", "dabbling in a demon's requests"),
+    ("Batreaux's Rewards (40 & 50)", "fulfilling a moderate amount of a demon's requests"),
+    ("Batreaux's Rewards (70s & 80)", "dedicating yourself to a demon's wishes"),
+    ("Beedle's Airshop (Cheap)", "making cheap purchases"),
+    ("Beedle's Airshop (Medium)", "making modest purchases"),
+    ("Beedle's Airshop (Expensive)", "making expensive purchases"),
 ]
 
 # Locations
@@ -978,10 +1001,10 @@ LOCATION_FILTER_TYPES = (
     "Sand Sea Goddess Chests",
     "Combat",
     "Minigames",
-    "Beedle's Shop Purchases",
-    "Beedle's Shop Purchase (Cheap)",
-    "Beedle's Shop Purchase (Medium)",
-    "Beedle's Shop Purchase (Expensive)",
+    "Beedle's Airshop",
+    "Beedle's Airshop (Cheap)",
+    "Beedle's Airshop (Medium)",
+    "Beedle's Airshop (Expensive)",
     "Batreaux's Rewards",
     "Loose Crystals",
     "Gratitude Crystal Sidequests",

@@ -121,6 +121,43 @@
         **Insanity**: Generally longer and more difficult seeds.
         **Nindy's Preposterous Playoffs**: Weighting used for the upcoming tournament of the same name. Has measures in place to keep things balanced to a degree, but does not have as much as other weightings."
   ui: option_random_settings_weighting
+- name: RS Randomized Progression Groups
+  command: random-progression-groups
+  type: multichoice
+  choices:
+    - Goddess Chests
+    - Silent Realms
+    - Combat
+    - Minigames
+    - Short Sidequests
+    - Long Sidequests
+    - Scrapper Deliveries
+    - Batreaux's Rewards (30 & below)
+    - Batreaux's Rewards (40 & 50)
+    - Batreaux's Rewards (70s & 80)
+    - Beedle's Airshop (Cheap)
+    - Beedle's Airshop (Medium)
+    - Beedle's Airshop (Expensive)
+  default: []
+  help: ""
+#- name: RS Disabled Progression Groups
+#  command: disabled-progression-groups
+#  type: multichoice
+#  choices:
+#    - Goddess Chests
+#    - Silent Realms
+#    - Minigames
+#    - Short Sidequests
+#    - Long Sidequests
+#    - Scrapper Quests
+#    - Batreaux's Rewards (30 and below)
+#    - Batreaux's Rewards (40 & 50)
+#    - Batreaux's Rewards (70s & 80)
+#    - Beedle's Airshop (300 and below)
+#    - Beedle's Airshop (600 and 800)
+#    - Beedle's Airshop (1000 and above)
+#  default: []
+#  help: ""
 ## Randomization Settings
 - name: Starting Tablet Count
   command: starting-tablet-count
@@ -1148,3 +1185,24 @@
   help: If enabled, the starting statue for each surface region will be randomized. All overworld statues
         except Inside the Volcano and Inside Fire Sanctuary may be chosen.
   ui: option_random_start_statues
+- name: Random Puzzles
+  command: random-puzzles
+  type: boolean
+  default: false
+  permalink: true
+  help: "Randomizes the Isle of Songs puzzle and the Ancient Cistern/Sandship directional door puzzles."
+  ui: option_random_puzzles
+- name: Batreaux Crystal Counts
+  command: batreaux-counts
+  type: singlechoice
+  bits: 2
+  default: Vanilla
+  choices: 
+    - Vanilla
+    - Half
+    - Random
+  help: "Determines the amount of crystals batreaux will require for each of his rewards.
+        **Vanilla**: The normal required crystal counts (min 5, max 80).
+        **Half**: Half of the normal required crystal counts (min 2, max 40).
+        **Random**: Completely random required crystal counts (min 1, max 80)."
+  ui: option_batreaux_counts

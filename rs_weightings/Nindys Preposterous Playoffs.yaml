@@ -291,6 +291,13 @@
     Bird Statues: 7
     Any Surface Region: 5
     Any: 5
+- name: Batreaux Crystal Counts
+  command: batreaux-counts
+  type: singlechoice
+  choices:
+    Vanilla: 4
+    Half: 2
+    Random: 3
 
 ## bools
 - name: Imp 2
@@ -448,6 +455,29 @@
   type: boolean
   checked: 2
   unchecked: 1
+- name: Random Puzzles
+  command: random-puzzles
+  type: boolean
+  checked: 1
+  unchecked: 3
+
+## Progression Locations
+- name: Progression Locations
+  type: locations
+  locations:
+    Goddess Chests: 25
+    Silent Realms: 65
+    Combat: 50
+    Minigames: 40
+    Short Sidequests: 70
+    Long Sidequests: 30
+    Scrapper Deliveries: 45
+    Batreaux's Rewards (30 & below): 65
+    Batreaux's Rewards (40 & 50): 50
+    Batreaux's Rewards (70s & 80): 30
+    Beedle's Airshop (Cheap): 80
+    Beedle's Airshop (Medium): 50
+    Beedle's Airshop (Expensive): 40
 
 
 ## Starting items

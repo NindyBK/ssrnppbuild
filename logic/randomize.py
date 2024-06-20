@@ -96,6 +96,7 @@ class Rando:
             | self.endgame_requirements
             | {i: DNFInventory(True) for i in self.placement.starting_items}
             | self.no_logic_requirements
+            | self.batreaux_rewards_requirements
         )
 
         logic_settings = LogicSettings(
@@ -112,6 +113,7 @@ class Rando:
             self.randomized_start_entrance,
             self.randomized_start_statues,
             list(self.placement.locations),
+            self.puzzles,
         )
 
         logic = Logic(areas, logic_settings, self.placement)
@@ -143,13 +145,27 @@ class Rando:
     def parse_options(self):
         if self.options["random-settings"]:
             self.options.randomize_settings(self)
+            self.options.randomize_progression_groups(self)
         if self.options["random-cosmetics"]:
             self.options.randomize_cosmetics(self)
         # Initialize location related attributes.
 
         self.randomize_required_dungeons()  # self.required_dungeons, self.unrequired_dungeons
+        if (
+            self.options["random-settings"]
+            and len(self.options.non_prog_groups) > 0
+            and "Combat" in self.options.non_prog_groups
+        ):
+            # Add heart container and dungeon end checks to combat for unrequired dungeons
+            excluded_locations = self.options["excluded-locations"]
+            for dun in self.unrequired_dungeons:
+                excluded_locations.extend(
+                    [DUNGEON_HEART_CONTAINERS[dun], DUNGEON_FINAL_CHECK[dun]]
+                )
+            self.options.set_option("excluded-locations", excluded_locations)
         self.randomize_starting_items()  # self.placement.starting_items
         self.ban_the_banned()  # self.banned, self.ban_options
+        self.batreaux_crystal_counts()
 
         self.get_endgame_requirements()  # self.endgame_requirements
 
@@ -158,6 +174,7 @@ class Rando:
         self.initialize_items()  # self.randosettings
 
         self.randomize_dungeons_trials_starting_entrances()
+        self.randomize_puzzles()
 
     def randomize_required_dungeons(self):
         """
@@ -172,6 +189,70 @@ class Rando:
         unreq_indices.sort()
         self.required_dungeons = [REGULAR_DUNGEONS[i] for i in req_indices]
         self.unrequired_dungeons = [REGULAR_DUNGEONS[i] for i in unreq_indices]
+
+    def randomize_puzzles(self):
+        if not self.options["random-puzzles"]:
+            self.puzzles = None
+            return
+
+        ssh_hint_order = list(range(4))
+        self.rng.shuffle(ssh_hint_order)
+        ssh_hint_rotations = [self.rng.randint(0, 3) for _ in range(4)]
+
+        # NB these directions are not the in-game direction parameters!
+        # gamepatches maps these to the right format
+
+        # down, up, down, right
+        ssh_starting_directions = [2, 0, 2, 3]
+        ssh_solution = [
+            (
+                ssh_starting_directions[ssh_hint_order[i]]
+                + ssh_hint_rotations[ssh_hint_order[i]]
+            )
+            % 4
+            for i in range(4)
+        ]
+
+        ac_hint_order = list(range(4))
+        self.rng.shuffle(ac_hint_order)
+        # up, down, left, right
+        ac_starting_directions = [0, 2, 1, 3]
+        ac_hint_rotations = [
+            self.rng.randint(0, 3),
+            self.rng.randint(0, 3),
+            self.rng.choice([0, 2]),
+            0,
+        ]
+        ac_hint_rotations[3] = ac_hint_rotations[2]
+        ac_solution = [
+            (
+                ac_starting_directions[ac_hint_order[i]]
+                + ac_hint_rotations[ac_hint_order[i]]
+            )
+            % 4
+            for i in range(4)
+        ]
+
+        # north to south
+        lmf_switches_solution = list(range(3))
+        self.rng.shuffle(lmf_switches_solution)
+
+        self.puzzles = {
+            "isle": {"pedestal_positions": [self.rng.randint(1, 12) for _ in range(3)]},
+            "sandship": {
+                "hint_order": ssh_hint_order,
+                "hint_rotations": ssh_hint_rotations,
+                "combo": ssh_solution,
+            },
+            "cistern": {
+                "hint_order": ac_hint_order,
+                "hint_rotations": ac_hint_rotations,
+                "combo": ac_solution,
+            },
+            "lmf": {
+                "switch_combo": lmf_switches_solution,
+            },
+        }
 
     def randomize_starting_items(self):
         """
@@ -350,6 +431,30 @@ class Rando:
             must_be_placed_items, may_be_placed_items, duplicable_items
         )
 
+    def batreaux_crystal_counts(self):
+        batreaux_setting = self.options["batreaux-counts"]
+        if batreaux_setting == "Vanilla":
+            self.batreaux_rewards = [5, 10, 30, 40, 50, 70, 80]
+        elif batreaux_setting == "Half":
+            self.batreaux_rewards = [2, 5, 15, 20, 25, 35, 40]
+        elif batreaux_setting == "Random":
+            self.batreaux_rewards = self.rng.sample(range(1, 80), 7)
+            self.batreaux_rewards.sort()
+        else:
+            pass
+        self.batreaux_rewards_requirements = {}
+        for reward in self.batreaux_rewards:
+            ext_item = EXTENDED_ITEM.getitem(f"\\{reward} Gratitude Crystals")
+            self.batreaux_rewards_requirements.update(
+                {
+                    f"\\Can Receive Batreaux Level {self.batreaux_rewards.index(reward) + 1} Rewards": DNFInventory(
+                        {Inventory({EXTENDED_ITEM(ext_item)})}
+                    )
+                }
+            )
+        self.options.batreaux_crystal_counts = self.batreaux_rewards.copy()
+        self.options.batreaux_crystal_counts.sort(reverse=True)
+
     def set_placement_options(self):
         shopsanity = self.options["shopsanity"]
         place_gondo_progressives = self.options["gondo-upgrades"]
@@ -387,6 +492,7 @@ class Rando:
             SSH_REQUIRED: SSH in self.required_dungeons,
             FS_UNREQUIRED: FS in self.unrequired_dungeons,
             FS_REQUIRED: FS in self.required_dungeons,
+            NO_RANDOM_PUZZLES_OPTION: not self.options["random-puzzles"],
         }
 
         enabled_tricks = set(self.options["enabled-tricks-bitless"])
