@@ -48,19 +48,19 @@ def write(
 
     if options["no-spoiler-log"]:
         return
-
     if len(placement.starting_items) > 0:
         file.write("\n\nStarting items:\n  ")
         file.write("\n  ".join(sorted(placement.starting_items)))
     file.write("\n\n\n")
 
     # Write required dungeons.
+
     for i, dungeon in enumerate(required_dungeons, start=1):
         file.write(f"Required Dungeon {i}: {dungeon}\n")
-
     file.write("\n\n")
 
     # Write spirit of the sword (100% required) locations.
+
     file.write("SotS:\n")
 
     sorted_regions = ["Past"] + list(ALL_HINT_REGIONS)
@@ -81,17 +81,16 @@ def write(
 
     for loc, item in sots_locations[DEMISE]:
         file.write(f"  {loc + ':':{max_location_name_length}} {item}\n")
-
     file.write("\n\n")
 
     # Write path locations; locations 100% required to complete a given required dungeon.
+
     file.write("Path:\n")
     for dungeon in required_dungeons:
         goal = DUNGEON_GOALS[dungeon]
         file.write(f"{goal}:\n")
         for loc, item in sots_locations[goal]:
             file.write(f"  {loc + ':':{max_location_name_length}} {item}\n")
-
     file.write("\n\n")
 
     barren, nonprogress = barren_nonprogress
@@ -106,9 +105,11 @@ def write(
     file.write("\n\n")
 
     # Write progression spheres.
+
     file.write("Playthrough:\n")
     prettified_spheres = []
     # First pass for the lengths.
+
     for sphere in progression_spheres:
         pretty_sphere = []
         for loc in sphere:
@@ -129,7 +130,6 @@ def write(
                 for (reg, loc, item) in pretty_sphere
             ],
         )
-
     max_location_name_length = 2 + max(
         (len(loc) for sphere in prettified_spheres for _, loc, _ in sphere), default=0
     )
@@ -144,10 +144,10 @@ def write(
 
             for _, loc, item in locations_in_zone:
                 file.write(f"      {loc + ':':{max_location_name_length}} {item}\n")
-
     file.write("\n\n\n")
 
     # Write item locations.
+
     file.write("All item locations:\n")
 
     with_regions = [
@@ -175,44 +175,46 @@ def write(
         file.write(zone_name + ":\n")
         for _, loc, item in locations_in_zone:
             file.write(f"    {loc + ':':{max_location_name_length}} {item}\n")
-
     file.write("\n\n\n")
 
     # Write entrances.
+
     file.write("Entrances:\n")
 
     # Write starting entrance.
+
     file.write("  Starting Entrance:\n")
     file.write(f"    {randomized_start_entrance['statue-name']}\n\n")
 
     # Write starting pillar statues.
+
     file.write("  Starting Statues:\n")
     for (
         pillar_name,
         statue,
     ) in randomized_start_statues.items():
         file.write(f"    {pillar_name+':':48} {statue[1].get('statue-name')}\n")
-
     file.write("\n")
 
     # Write dungeon entrances.
+
     file.write("  Dungeon Entrances:\n")
     for (
         entrance_name,
         dungeon,
     ) in randomized_dungeon_entrance.items():
         file.write(f"    {entrance_name+':':48} {dungeon}\n")
-
     file.write("\n\n")
 
     # Write randomized trial gates.
+
     file.write("Trial Gates:\n")
     for trial_gate, trial in randomized_trial_entrance.items():
         file.write(f"  {trial_gate+':':48} {trial}\n")
-
     file.write("\n\n\n")
 
     # Write Batreaux Crystal Counts
+
     file.write("Batreaux Crystal Counts:\n")
     for count in range(3):
         txt = ["First", "Second", "Third"]
@@ -248,9 +250,8 @@ def write(
         )
         file.write(f"  {'Lanayru Mining Facility Switch Order'+':':48} {lmf_combo}\n")
         file.write("\n\n\n")
-
-
     # Write hints.
+
     file.write("Hints:\n")
 
     max_hintstone_name_length = 2 + max(
@@ -271,7 +272,6 @@ def write(
             file.write(
                 f"  {norm(hintloc) + ':':{max_hintstone_name_length}} {hint_stone.to_spoiler_log_text(norm)}\n"
             )
-
     file.write("\n\n\n")
 
 

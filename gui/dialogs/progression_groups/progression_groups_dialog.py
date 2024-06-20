@@ -24,6 +24,7 @@ class ProgressionGroupsDialog(QDialog):
         self.setStyleSheet(style_sheet)
 
         # DISABLING LOCATIONS NOT YET INTEGRATED -------------------------
+
         self.ui.disable_location.setEnabled(False)  # Keep these disabled
         self.ui.randomize_location1.setEnabled(False)
         self.ui.disabled_locations.setEnabled(False)

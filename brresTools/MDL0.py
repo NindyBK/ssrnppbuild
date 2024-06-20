@@ -1,4 +1,5 @@
 # https://wiki.tockdom.com/wiki/MDL0_(File_Format)
+
 from dataclasses import dataclass
 from io import BufferedIOBase
 from itertools import chain
@@ -45,7 +46,6 @@ class MDL0:
             num_sections = 11
         elif version_number == 11:
             num_sections = 14
-
         dataBuffer.seek(start_offset + 0x10)
         section_offsets = struct.unpack(
             ">" + "I" * num_sections, dataBuffer.read(4 * num_sections)
@@ -75,10 +75,8 @@ class MDL0:
             if child.name == buffer_name and isinstance(child, SubFileNode):
                 entry_offset = child.dataOffset
                 break
-
         if not entry_offset:
             raise ValueError("did not find " + buffer_name)
-
         self.dataBuffer.seek(entry_offset)
         header = struct.unpack(">IiiiIIIBBH", self.dataBuffer.read(0x20))
         [
@@ -97,7 +95,6 @@ class MDL0:
             raise ValueError("cannot decode non-XY UV")
         if data_fmt != 0x03:
             raise ValueError("cannot decode non-uint16 UV")
-
         return entry_offset, data_offset, coord_count
 
     def get_uvs(self, buffer_name: str) -> List[List[int]]:
@@ -108,14 +105,12 @@ class MDL0:
         for _ in range(coord_count):
             coord = struct.unpack(">hh", self.dataBuffer.read(0x4))
             coords.append(coord)
-
         return coords
 
     def set_uvs(self, buffer_name: str, uvs: List[List[int]]):
         entry_offset, data_offset, coord_count = self.get_uv_entry_header(buffer_name)
         if len(uvs) != coord_count:
             raise ValueError("cannot in-place patch vertices due to count mismatch")
-
         bytes = bytearray()
         coords_flat = list(chain.from_iterable(uvs))
         bytes.extend(struct.pack(">" + "hh" * coord_count, *coords_flat))
@@ -140,10 +135,8 @@ class MDL0:
             if child.name == buffer_name and isinstance(child, SubFileNode):
                 entry_offset = child.dataOffset
                 break
-
         if not entry_offset:
             raise ValueError("did not find " + buffer_name)
-
         self.dataBuffer.seek(entry_offset)
         header = struct.unpack(">IiiiIIIBBH", self.dataBuffer.read(0x20))
         [
@@ -162,7 +155,6 @@ class MDL0:
             raise ValueError("cannot decode non-XYZ vertices")
         if data_fmt != 0x04:
             raise ValueError("cannot decode non-float vertices")
-
         return entry_offset, data_offset, vertex_count
 
     def get_vertices(self, buffer_name: str) -> List[List[float]]:
@@ -175,7 +167,6 @@ class MDL0:
         for _ in range(vertex_count):
             coords = struct.unpack(">fff", self.dataBuffer.read(0xC))
             vertices.append(coords)
-
         return vertices
 
     def set_vertices(self, buffer_name: str, vertices: List[List[float]]):
@@ -184,7 +175,6 @@ class MDL0:
         )
         if len(vertices) != vertex_count:
             raise ValueError("cannot in-place patch vertices due to count mismatch")
-
         bytes = bytearray()
         floats = list(chain.from_iterable(vertices))
         bytes.extend(struct.pack(">" + "fff" * vertex_count, *floats))
@@ -200,5 +190,4 @@ class MDL0:
 
         for patch in self.patches:
             buf[patch.offset : patch.offset + len(patch.bytes)] = patch.bytes
-
         return buf

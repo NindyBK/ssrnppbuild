@@ -16,6 +16,7 @@ MAX_STONE_HINTS = MAX_HINTS_PER_STONE * NUMBER_OF_HINT_STONES
 
 # Logic options, runtime requirements
 
+
 OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
 OPEN_ET_OPTION = EIN("Open ET option")
 OPEN_LMF_OPTION = EIN("Open LMF option")
@@ -127,7 +128,10 @@ RS_PROGRESSION_GROUPS = [
     ("Long Sidequests", "helping with long requests"),
     ("Scrapper Deliveries", "transporting objects above the clouds"),
     ("Batreaux's Rewards (30 & below)", "dabbling in a demon's requests"),
-    ("Batreaux's Rewards (40 & 50)", "fulfilling a moderate amount of a demon's requests"),
+    (
+        "Batreaux's Rewards (40 & 50)",
+        "fulfilling a moderate amount of a demon's requests",
+    ),
     ("Batreaux's Rewards (70s & 80)", "dedicating yourself to a demon's wishes"),
     ("Beedle's Airshop (Cheap)", "making cheap purchases"),
     ("Beedle's Airshop (Medium)", "making modest purchases"),
@@ -225,6 +229,7 @@ TABLET_TO_PROVINCE = {
 
 # Items
 
+
 ITEM_COUNTS: Dict[str, int] = defaultdict(lambda: 1)
 
 
@@ -252,6 +257,7 @@ HINT = "Hint"
 HINTS = group(HINT, MAX_STONE_HINTS + MAX_FI_HINTS)
 
 # SAILCLOTH = EIN("Sailcloth")
+
 BOMB_BAG = EIN("Bomb Bag")
 GUST_BELLOWS = EIN("Gust Bellows")
 WHIP = EIN("Whip")
@@ -495,6 +501,7 @@ CONSUMABLE_ITEMS = RUPEES | TREASURES | FIVE_BOMBS_GROUP
 # Once all the items that have a fixed number per seed are used up, this list is used.
 # Unlike the other lists, this one does not have items removed from it as they are placed.
 # The number of each item in this list is instead its weighting relative to the other items in the list.
+
 DUPLICABLE_ITEMS = dict.fromkeys(
     [
         BLUE_RUPEE,
@@ -506,6 +513,7 @@ DUPLICABLE_ITEMS = dict.fromkeys(
 DUPLICABLE_COUNTERPROGRESS_ITEMS = {RUPOOR: None}
 
 # note: Lanayru Caves is technically not a dungeon, but has to be treated as such for non key sanity
+
 ALL_SMALL_KEYS = (
     {CAVES_KEY: None}
     | SMALL_KEYS[SV]
@@ -692,6 +700,7 @@ DUNGEONFLAG_INDICES = {
 
 # Retro-compatibility
 
+
 SV_ENTRANCE = "Dungeon Entrance in Deep Woods"
 ET_ENTRANCE = "Dungeon Entrance in Eldin Volcano"
 LMF_ENTRANCE = "Dungeon Entrance in Lanayru Desert"
@@ -844,6 +853,7 @@ RUPEE_COUNTER = 501
 
 # lists are used for progressive items,
 # tuples for setting multiple flags for one item
+
 ITEM_FLAGS = {
     PROGRESSIVE_BOW: [19, 90, 91],
     PROGRESSIVE_BEETLE: [53, 75, 76, 77],
@@ -893,6 +903,7 @@ ITEM_FLAGS = {
 
 # lists are used for progressive items,
 # tuples for setting multiple flags for one item
+
 ITEM_STORY_FLAGS = {
     EMERALD_TABLET: 46,
     RUBY_TABLET: 47,

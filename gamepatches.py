@@ -37,13 +37,15 @@ from asm.patcher import apply_dol_patch, apply_rel_patch
 from util.textbox_utils import (
     break_lines,
     break_and_make_multiple_textboxes,
-     make_multiple_textboxes,
+    make_multiple_textboxes,
 )
 
 TOTAL_STAGE_FILES = 369
 TOTAL_EVENT_FILES = 6
 
 # arc cache, main.dol, rels, objectpack
+
+
 GAMEPATCH_TOTAL_STEP_COUNT = TOTAL_EVENT_FILES + TOTAL_STAGE_FILES + 4
 
 DEFAULT_SOBJ = OrderedDict(
@@ -129,6 +131,8 @@ DEFAULT_PNT = OrderedDict(
 )
 
 # cutscenes to use to set storyflags, sceneflags and itemflags
+
+
 START_CUTSCENES = [
     # stage, room, eventindex
     ("F000", 0, 22),
@@ -138,6 +142,8 @@ START_CUTSCENES = [
 ]
 
 # The stage name of each dungeon
+
+
 DUNGEON_STAGES = {
     SV: "D100",
     AC: "D101",
@@ -149,6 +155,8 @@ DUNGEON_STAGES = {
 }
 
 # The stage for each map where there are dungeon entrances
+
+
 DUNGEON_ENTRANCE_STAGES = {
     # stage, room, scen
     SV_ENTRANCE: ("F101", 0, 1),
@@ -360,6 +368,8 @@ DEFAULT_BUY_DECIDE_SCALE = 1.5
 DEFAULT_PUT_SCALE = 1.7
 
 # Smaller values move items higher up.
+
+
 HEIGHT_OFFSETS = {
     # Don't work for some reason
     # 35: -30.0, # Gratitude Crystal Pack
@@ -981,6 +991,7 @@ def make_progressive_item(
     # if yes, set the storyflag for this upgrade, give the upgrade and jump to that upgrade's text
     # otherwise check the next upgrade storyflag. If no storyflag is set, set the lowest upgrades storyflag
     # but no need to give that item since it's that items event that is hijacked
+
     for index in range(len(item_text_indexes) - 1, 0, -1):
         branch = make_switch(FlagSwitchTypes.STORYFLAG, storyflags[index - 1])
         add_msbf_branch(msbf, branch, [flow_idx + 1, flow_idx + 3])
@@ -997,6 +1008,8 @@ def make_progressive_item(
 
 
 # check highest
+
+
 def highest_objid(bzs):
     max_id = 0
     for layer in bzs.get("LAY ", {}).values():
@@ -1097,12 +1110,13 @@ def try_patch_obj(obj, key, value):
             obj["params1"] = mask_shift_set(obj["params1"], 0x03, 28, value)
         else:
             print(f'ERROR: unsupported key "{key}" to patch for object {obj}')
-     elif obj["name"] == "UtaStop":
+    elif obj["name"] == "UtaStop":
         # Isle of Songs blocker
         # n.b. angle and ring changes leave a socket in the main island mesh
         # that makes reading the puzzle very difficult, so they're unused, but
         # they've been tested to work. TODO use MDL0 editing for these, but also
         # prove the puzzle remains solvable
+
         if key == "angle":
             obj["params1"] = mask_shift_set(obj["params1"], 0xF, 12, value)
         elif key == "ring":
@@ -1113,11 +1127,13 @@ def try_patch_obj(obj, key, value):
             print(f'ERROR: unsupported key "{key}" to patch for object {obj}')
     elif obj["name"] == "SwDir2":
         # ancient cistern/sandship door lock
+
         if key == "combo":
             # their mapping: up: 0, down: 1, left: 2, right: 3
             # our mapping:   up: 0, left: 1, down: 2, right: 3
             # to make the "rotations" work in our puzzle our order
             # works counter-clockwise
+
             mapping_translation = [0, 2, 1, 3]
             order = [mapping_translation[i] for i in value]
             obj["params1"] = mask_shift_set(obj["params1"], 7, 0x10, order[0])
@@ -1128,6 +1144,7 @@ def try_patch_obj(obj, key, value):
             print(f'ERROR: unsupported key "{key}" to patch for object {obj}')
     elif obj["name"] == "Swhit":
         # crystals switch
+
         if key == "setscenefid":
             obj["params1"] = mask_shift_set(obj["params1"], 0xFF, 3, value)
         else:
@@ -1141,37 +1158,48 @@ def patch_tbox_item(tbox: OrderedDict, itemid: int, dowsing: int):
     boxtype = tboxSubtypes[origitemid]
     tbox["anglez"] = mask_shift_set(tbox["anglez"], 0x1FF, 0, itemid)
     # code has been patched, to interpret this part of params1 as boxtype
+
     tbox["params1"] = mask_shift_set(tbox["params1"], 0x3, 4, boxtype)
     # asm patch checks for first nybble of params2 to enable dowsing on the given slot
+
     tbox["params2"] = mask_shift_set(tbox["params2"], 0xF, 28, dowsing)
 
 
 def patch_item_item(itemobj: OrderedDict, itemid: int):
     itemobj["params1"] = mask_shift_set(itemobj["params1"], 0xFF, 0, itemid)
     # subtype 9, this acts like hearpieces and force being collected with a textbox
+
     itemobj["params1"] = mask_shift_set(itemobj["params1"], 0xF, 0x14, 9)
 
 
 # these are not treasure chests, but instead only used for the hp in zeldas room
+
+
 def patch_chest_item(chest: OrderedDict, itemid: int):
     chest["params1"] = mask_shift_set(chest["params1"], 0xFF, 8, itemid)
 
 
 # code has been patched to use this part of params1 as itemid
+
+
 def patch_heart_co(heart_co: OrderedDict, itemid: int):
     heart_co["params1"] = mask_shift_set(heart_co["params1"], 0xFF, 16, itemid)
 
 
 # code has been patched to use this part of params1 as itemid
+
+
 def patch_chandelier_item(chandel: OrderedDict, itemid: int):
     chandel["params1"] = mask_shift_set(chandel["params1"], 0xFF, 8, itemid)
 
 
 def patch_soil_item(soil: OrderedDict, itemid: int):
     # match key piece soils in all ways but keep sceneflag
+
     soil["params1"] = (soil["params1"] & 0xFF0) | 0xFF0B1004
     # code has been patched to use the first byte of params2 as itemid, but only
     # if it would have been a key piece otherwise
+
     soil["params2"] = mask_shift_set(soil["params2"], 0xFF, 0x18, itemid)
 
 
@@ -1184,6 +1212,8 @@ def patch_key_bokoblin_item(boko: OrderedDict, itemid: int):
 
 
 # not treasure chest, wardrobes you can open, used for zelda room HP
+
+
 def rando_patch_chest(bzs: OrderedDict, itemid: int, id: str):
     id = int(id)
     chest = next(
@@ -1257,6 +1287,7 @@ def rando_patch_goddess_crest(bzs: OrderedDict, itemid: int, index: str):
     # we need to patch 3 item ids into this object:
     # 1 is params1 FF 00 00 00, 2 is params1 00 FF 00 00
     # 3 is params2 FF 00 00 00
+
     if index == "0":
         obj["params1"] = mask_shift_set(obj["params1"], 0xFF, 0x18, itemid)
     elif index == "1":
@@ -1282,6 +1313,8 @@ def rando_patch_bell(bzs: OrderedDict, itemid: int, id: str):
 
 
 # functions, that patch the object, they take: the bzs of that layer, the item id and optionally an id, then patches the object in place
+
+
 RANDO_PATCH_FUNCS = {
     "chest": rando_patch_chest,
     "HeartCo": rando_patch_heartco,
@@ -1303,14 +1336,19 @@ def get_patches_from_location_item_list(all_checks, filled_checks, chest_dowsing
     by_item_name = dict((x["name"], x) for x in items)
 
     # (stage, room) -> (object name, layer, id?, itemid)
+
     stagepatchv2 = defaultdict(list)
     # (stage, layer) -> oarc
+
     stageoarcs = defaultdict(set)
     # # eventfile: (line, itemid)
+
     eventpatches = defaultdict(list)
     # shopindex: (itemid, arcname, modelname)
+
     shoppatches = {}
     # trialstage -> (itemsceneflag, itemid)
+
     trialrelics = defaultdict(list)
 
     stage_re = re.compile(
@@ -1322,6 +1360,7 @@ def get_patches_from_location_item_list(all_checks, filled_checks, chest_dowsing
 
     for checkname, itemname in filled_checks.items():
         # single gratitude crystals aren't randomized
+
         itemname = strip_item_number(itemname)
         if itemname == "Gratitude Crystal":
             continue
@@ -1349,8 +1388,10 @@ def get_patches_from_location_item_list(all_checks, filled_checks, chest_dowsing
                     # add dummy to force patching this stage
                     # otherwise it could lead to an increased stage size
                     # which will lead to a crash
+
                     stageoarcs[(stage, layer)].add("dummy")
                 # fake object name to handle it easier
+
                 if objname == "Relic":
                     trialrelics[stage].append((int(objid), item["id"]))
                 else:
@@ -1373,10 +1414,12 @@ def get_patches_from_location_item_list(all_checks, filled_checks, chest_dowsing
                         stageoarcs[(stage, layer)].add(oarc)
                 else:
                     # see above
+
                     stageoarcs[(stage, layer)].add("dummy")
             elif shop_smpl_match:
                 index = int(shop_smpl_match.group("index"))
                 # TODO: super fix this, add all models/arcs to items.yaml
+
                 arcname = item.get("getarcname", None)
                 modelname = item.get("getmodelname", None)
                 oarc = item["oarc"]
@@ -1527,6 +1570,7 @@ class GamePatcher:
         self.patches[stage].append(stagepatch)
 
     # also used for text
+
     def add_patch_to_event(self, eventfile, eventpatch):
         if eventfile not in self.eventpatches:
             self.eventpatches[eventfile] = []
@@ -1539,6 +1583,7 @@ class GamePatcher:
         filtered_storyflags = []
         for storyflag in self.patches["global"]["startstoryflags"]:
             # conditionals are an object
+
             if not isinstance(storyflag, int):
                 if self.filter_option_requirement(storyflag):
                     storyflag = storyflag["storyflag"]
@@ -1550,13 +1595,13 @@ class GamePatcher:
         self.startitemflags = {flag: 1 for flag in self.patches["global"]["startitems"]}
 
         # patches from randomizing items
+
         filtered_item_locations = self.placement_file.item_locations.copy()
         if not self.placement_file.options["rupeesanity"]:
             to_remove = map(self.areas.short_to_full, RUPEE_CHECKS)
 
             for rupee_check in to_remove:
                 del filtered_item_locations[rupee_check]
-
         (
             self.rando_stagepatches,
             self.stageoarcs,
@@ -1570,6 +1615,7 @@ class GamePatcher:
         )
 
         # assembly patches
+
         self.all_asm_patches = defaultdict(OrderedDict)
         self.add_asm_patch("custom_funcs")
         self.add_asm_patch("ss_necessary")
@@ -1598,6 +1644,7 @@ class GamePatcher:
             self.add_asm_patch("no_enemy_music")
         # GoT patch depends on required sword
         # cmpwi r0, (insert sword)
+
         self.all_asm_patches["d_a_obj_time_door_beforeNP.rel"][0xD48] = {
             "Data": [
                 0x2C,
@@ -1609,9 +1656,9 @@ class GamePatcher:
 
         if self.placement_file.puzzles is not None:
             self.add_puzzle_patches()
-
         # Damage Multiplier patch requires input, replacing one line
         # muli r27, r27, (multiplier)
+
         self.all_asm_patches["main.dol"][0x801E3464] = {
             "Data": [
                 0x1F,
@@ -1623,6 +1670,7 @@ class GamePatcher:
 
         # Star count patch requires input, replacing one line.
         # cmpwi r15, (count)
+
         self.all_asm_patches["main.dol"][0x801AB870] = {
             "Data": [
                 0x2C,
@@ -1634,6 +1682,7 @@ class GamePatcher:
 
         # File Progress Text flag for required sword
         # 0x80ecdc48 -> 0x889C
+
         required_sword_number = SWORD_COUNT[
             self.placement_file.options["got-sword-requirement"]
         ]
@@ -1641,12 +1690,14 @@ class GamePatcher:
         # 0x389 = 905
         # Rando sword story flags: 906 -> 911 (Swordless -> TMS)
         # e.g. Goddess Sword = 0x389 + 2 = 0x389 + required_sword_number
+
         self.all_asm_patches["d_lyt_file_selectNP.rel"][0x889C] = {
             "Data": [0x03, 0x89 + required_sword_number]
         }
 
         # Batreaux crystal counts
         # Patching the game so it checks for the new amounts of crystals
+
         for offset in BATREAUX_REWARDS:
             self.all_asm_patches["d_a_npc_akumakunNP.rel"][offset] = {
                 "Data": [
@@ -1676,13 +1727,14 @@ class GamePatcher:
 
             # TODO this kinda sucks, but essentially we just put this random number
             # in the lui & ori instructions
+
             patch = self.all_asm_patches["d_a_obj_door_bossNP.rel"][0x8994]["Data"]
             patch[2] = bk_angle_bytes[0]
             patch[3] = bk_angle_bytes[1]
             patch[6] = bk_angle_bytes[2]
             patch[7] = bk_angle_bytes[3]
-
         # for asm, custom symbols
+
         with (RANDO_ROOT_PATH / "asm" / "custom_symbols.txt").open("r") as f:
             self.custom_symbols = yaml.safe_load(f)
         self.main_custom_symbols = self.custom_symbols.get("main.dol", {})
@@ -1691,6 +1743,7 @@ class GamePatcher:
         self.main_original_symbols = self.original_symbols.get("main.dol", {})
 
         # for asm, free space start offset
+
         with (RANDO_ROOT_PATH / "asm" / "free_space_start_offsets.txt").open("r") as f:
             self.free_space_start_offsets = yaml.safe_load(f)
 
@@ -1709,6 +1762,7 @@ class GamePatcher:
             ]
             dungeon_stage, layer, room, entrance_index = DUNGEON_ENTRANCES[dungeon]
             # patch dungeon entrance
+
             self.add_patch_to_stage(
                 entrance_stage,
                 {
@@ -1728,6 +1782,7 @@ class GamePatcher:
 
             # handle the extra loading zone to the dungeon in Sand Sea from Ancient Harbor
             # yes I know there was probably a better way to do this but it's a one off special case
+
             if entrance == SSH_ENTRANCE:
                 self.add_patch_to_stage(
                     "F301",
@@ -1761,14 +1816,15 @@ class GamePatcher:
                         },
                     },
                 )
-
             # most dungeons only have a single exit, exception being LMF, which is handled seperately
+
             exit_stage, exit_layer, exit_room, exit_entrance = DUNGEON_EXITS[entrance]
             # the exit out of the back of LMF is special, because it's the only dungeon finish that can be
             # taken multiple times. The first time it should show a save prompt and subsequent times
             # it should not and they don't need to be touched if the LMF entrance is vanilla
             # the first time exit is taken care of by the DUNGEON_FINISH_EXIT_SCEN stuff
             # patch the secondary exit if it's not vanilla
+
             if dungeon == LMF and not entrance == LMF_ENTRANCE:
                 self.add_patch_to_stage(
                     "F300_5",
@@ -1787,6 +1843,7 @@ class GamePatcher:
                     },
                 )
             # patch all the exits for the dungeon
+
             for scen_stage, scen_room, scen_index in DUNGEON_EXIT_SCENS[dungeon]:
                 self.add_patch_to_stage(
                     scen_stage,
@@ -1804,7 +1861,6 @@ class GamePatcher:
                         },
                     },
                 )
-
             scen_stage, scen_room, scen_index = DUNGEON_FINISH_EXIT_SCEN[dungeon]
             exit_stage, exit_layer, exit_room, exit_entrance = DUNGEON_FINISH_EXITS[
                 entrance
@@ -1834,6 +1890,7 @@ class GamePatcher:
             ]
             trial_stage, layer, room, trial_gate_index = TRIAL_ENTRANCES[trial]
             # patch dungeon entrance
+
             self.add_patch_to_stage(
                 trial_gate_stage,
                 {
@@ -1873,6 +1930,7 @@ class GamePatcher:
     def shopsanity_patches(self):
         beedle_texts = yaml_load(Path(__file__).parent / "beedle_texts.yaml")
         # print(beedle_texts)
+
         for location in BEEDLE_TEXT_PATCHES:
             normal, discounted, normal_price, discount_price = BEEDLE_TEXT_PATCHES[
                 location
@@ -1901,9 +1959,9 @@ class GamePatcher:
             if location in beedle_texts:
                 if sold_item in beedle_texts[location]:
                     # item has custom text for Beedle's shop
+
                     normal_text = f'{beedle_texts[location][sold_item]["normal"]}{BEEDLE_BUY_SWTICH}'
                     discount_text = f'{beedle_texts[location][sold_item]["discount"]}{BEEDLE_BUY_SWTICH}'
-
             if isinstance(normal, int):  # string index is new text
                 self.eventpatches["105-Terry"].append(
                     {
@@ -2029,8 +2087,10 @@ class GamePatcher:
         )
 
         # north to south
+
         switch_objs = [0xFC1A, 0xFC1B, 0xFC1C]
         # order
+
         switch_flags = [29, 30, 31]
         for idx, obj in enumerate(self.placement_file.puzzles["lmf"]["switch_combo"]):
             self.add_patch_to_stage(
@@ -2045,7 +2105,6 @@ class GamePatcher:
                     "object": {"setscenefid": switch_flags[idx]},
                 },
             )
-
         self.add_patch_to_stage(
             "D300_1",
             {
@@ -2057,9 +2116,11 @@ class GamePatcher:
         )
 
         # Ghidra: 0x80d757f0
+
         for i in range(3):
             # this patches the three immediates in li intructions, which looks safe
             # (the registers are always overwritten before they read again)
+
             self.all_asm_patches["d_a_obj_utajima_main_mechaNP.rel"][
                 0x860 + 4 * i + 3
             ] = {"Data": [self.placement_file.puzzles["isle"]["pedestal_positions"][i]]}
@@ -2073,33 +2134,35 @@ class GamePatcher:
 
     def add_peatrice_storyflags(self):
         # Peatrice convo count.
+
         peatrice_convo_count = self.placement_file.options["peatrice-conversations"]
 
         # Peatrice switch.
+
         if peatrice_convo_count % 2 == 1:
             self.startstoryflags.append(631)
-
         # Peatrice even convos.
+
         if peatrice_convo_count <= 4:
             self.startstoryflags.append(628)
             self.startstoryflags.append(689)
-
         if peatrice_convo_count <= 2:
             self.startstoryflags.append(629)
             self.startstoryflags.append(690)
-
         if peatrice_convo_count == 0:
             self.startstoryflags.append(630)
             self.startstoryflags.append(691)
 
     def add_startitem_patches(self):
         # Add sword story/itemflags if required
+
         start_sword_count = len(
             set(PROGRESSIVE_SWORDS) & set(self.placement_file.starting_items)
         )
 
         if start_sword_count > 3:
             # Give sword dowsing flags.
+
             self.startstoryflags.append(583)  # 4 extra Dowsing slots
 
             if self.placement_file.options["dowsing-after-whitesword"]:
@@ -2107,32 +2170,32 @@ class GamePatcher:
                 self.startstoryflags.append(104)  # Crystal Dowsing
                 self.startstoryflags.append(105)  # Rupee Dowsing
                 self.startstoryflags.append(110)  # Goddess Cube Dowsing
-
         # Give the completed song of the hero if all 3 pieces are added as starting items.
+
         if all(
             soth_part in self.placement_file.starting_items
             for soth_part in SONG_OF_THE_HERO_PARTS
         ):
             self.startitemflags[ITEM_FLAGS[SONG_OF_THE_HERO]] = 1
-
         # Give the completed triforce storyflag if all 3 triforce pieces are added as starting items.
+
         if all(
             triforce_piece in self.placement_file.starting_items
             for triforce_piece in TRIFORCES
         ):
             self.startstoryflags.append(ITEM_STORY_FLAGS[COMPLETE_TRIFORCE])
-
         if all(
             key_piece in self.placement_file.starting_items for key_piece in KEY_PIECES
         ):
             self.startstoryflags.append(ITEM_STORY_FLAGS[FULL_ET_KEY])
-
         # Add starting story and item flags.
+
         start_item_counts = Counter(
             map(strip_item_number, self.placement_file.starting_items)
         )
 
         # Health is calculated in quarter hearts
+
         starting_health = 6 * 4
         starting_health += start_item_counts.pop(HEART_CONTAINER, 0) * 4
         starting_health += start_item_counts.pop(HEART_PIECE, 0)
@@ -2141,6 +2204,7 @@ class GamePatcher:
         self.startitemflags[ITEM_COUNT_FLAGS[HEART_PIECE]] = starting_health % 4
 
         # Gratitude Crystal Packs
+
         crystal_packs = 0
         crystal_packs += start_item_counts.pop(GRATITUDE_CRYSTAL_PACK, 0)
         self.startitemflags[ITEM_COUNT_FLAGS[GRATITUDE_CRYSTAL_PACK]] = (
@@ -2148,19 +2212,23 @@ class GamePatcher:
         )
 
         # Tadtones
+
         self.starting_tadtones = 0
         self.starting_tadtones += start_item_counts.pop(GROUP_OF_TADTONES, 0)
 
         # Empty Bottles
+
         self.starting_bottles = 0
         self.starting_bottles += start_item_counts.pop(EMPTY_BOTTLE, 0)
 
         # Hylian Shield
+
         self.start_with_hylian_shield = self.placement_file.options[
             "start-with-hylian-shield"
         ]
 
         # Starting bugs and treasures
+
         self.max_starting_bugs = self.placement_file.options["max-starting-bugs"]
         self.max_starting_treasures = self.placement_file.options[
             "max-starting-treasures"
@@ -2172,7 +2240,6 @@ class GamePatcher:
             self.startitemflags[RUPEE_COUNTER] = (
                 WALLET_SIZES[wallets] + extra_wallets * EXTRA_WALLET_SIZE
             )
-
         ALL_DUNGEON_LIKE = ALL_DUNGEONS + [
             LANAYRU_CAVES
         ]  # [SV, ET, LMF, AC, SSH, FS, SK, LANAYRU_CAVES]
@@ -2188,15 +2255,17 @@ class GamePatcher:
             count = start_item_counts.pop(f"{dungeon} Small Key", 0)
             dungeonbyte |= count << 2
             self.startdungeonflags.append(dungeonbyte)
-
         for item, count in start_item_counts.items():
             # item flags
+
             if (entry := ITEM_FLAGS.get(item)) is not None:
                 # tuple means add all flags
+
                 if isinstance(entry, tuple):
                     for flag in entry:
                         self.startitemflags[flag] = 1
                 # list means progressive item, only add flags up to the start count
+
                 elif isinstance(entry, list):
                     for flag in entry[:count]:
                         self.startitemflags[flag] = 1
@@ -2205,6 +2274,7 @@ class GamePatcher:
                 else:
                     raise ValueError(f"Expected list, tuple or int, got : {entry}.")
             # story flags
+
             if (entry := ITEM_STORY_FLAGS.get(item)) is not None:
                 if isinstance(entry, tuple):
                     self.startstoryflags.extend(entry)
@@ -2218,6 +2288,7 @@ class GamePatcher:
                 self.startstoryflags.append(30)  # Vanilla storyflag for pouch.
             if (ammo_flag_count := START_AMMO_COUNTS.get(item)) is not None:
                 # to fill up ammo for items that use it
+
                 self.startitemflags[ammo_flag_count[0]] = ammo_flag_count[1]
             if (counter := ITEM_COUNT_FLAGS.get(item)) is not None:
                 if item == PROGRESSIVE_POUCH:
@@ -2228,6 +2299,7 @@ class GamePatcher:
 
     def add_required_dungeon_patches(self):
         # Add required dungeon patches to eventpatches
+
         DUNGEON_TO_EVENTFILE = {
             SV: "201-ForestD1",
             ET: "301-MountainD1",
@@ -2250,15 +2322,15 @@ class GamePatcher:
             required_dungeon_storyflag_event["flow"]["param2"] = (
                 REQUIRED_DUNGEON_STORYFLAGS[i]
             )  # param2 is storyflag of event
-
         required_dungeon_count = len(self.placement_file.required_dungeons)
         # set flags for unrequired dungeons beforehand
+
         for required_dungeon_storyflag in REQUIRED_DUNGEON_STORYFLAGS[
             required_dungeon_count:
         ]:
             self.startstoryflags.append(required_dungeon_storyflag)
-    
-     def add_batreaux_patches(self):
+
+    def add_batreaux_patches(self):
         for reward in self.options.batreaux_crystal_counts:
             ix = self.options.batreaux_crystal_counts.index(reward)
             if ix == 6:
@@ -2321,6 +2393,7 @@ class GamePatcher:
         )
 
         # Add a hint for Batreaux counts on Kukiel in Batreaux's house
+
         crystal_counts = self.options.batreaux_crystal_counts.copy()
         crystal_counts.reverse()
         rewards_str = (
@@ -2347,6 +2420,7 @@ class GamePatcher:
 
         required_dungeon_count = len(self.placement_file.required_dungeons)
         # patch required dungeon text in
+
         if required_dungeon_count == 0:
             required_dungeons_text = "No Dungeons"
         elif required_dungeon_count == 6:
@@ -2355,7 +2429,6 @@ class GamePatcher:
             required_dungeons_text = "\n".join(colorful_dungeon_text)
         else:
             required_dungeons_text = break_lines(", ".join(colorful_dungeon_text), 44)
-
         fi_hint_chunks = []
         current_chunk = []
         current_chunk_len = 0
@@ -2363,6 +2436,7 @@ class GamePatcher:
             cur_hint_len = len(hint)
             # there is a limit to how long a single text can be, so
             # break it up
+
             if cur_hint_len + current_chunk_len > 700:
                 fi_hint_chunks.append(current_chunk)
                 current_chunk = []
@@ -2371,7 +2445,6 @@ class GamePatcher:
             current_chunk_len += cur_hint_len
         if current_chunk:
             fi_hint_chunks.append(current_chunk)
-
         # print([len(break_and_make_multiple_textboxes(hints)) for hints in fi_hint_chunks])
 
         self.eventpatches["006-8KenseiNormal"].append(
@@ -2431,7 +2504,6 @@ class GamePatcher:
                     ),
                 }
             )
-
         fi_objective_text = next(
             filter(
                 lambda x: x["name"] == "Fi Objective Text",
@@ -2458,6 +2530,7 @@ class GamePatcher:
         )
 
         # dungeon status text for Fi
+
         for dungeon_index, dungeon in enumerate(ALL_DUNGEONS):
             self.eventpatches["006-8KenseiNormal"].append(
                 {
@@ -2529,6 +2602,7 @@ class GamePatcher:
             )
 
         # Trial Hints
+
         trial_checks = {
             # (getting it text patch, line, inventory text line, hintname)
             "Skyloft Silent Realm - Trial Reward": (
@@ -2577,9 +2651,9 @@ class GamePatcher:
 
     def add_impa_hint(self):
         # Skip over Impa SoT hint if SoT is a starting item.
+
         if ITEM_FLAGS[STONE_OF_TRIALS] in self.startitemflags:
             return
-
         loc = {v: k for k, v in self.placement_file.item_locations.items()}[
             STONE_OF_TRIALS
         ]
@@ -2652,7 +2726,6 @@ class GamePatcher:
                     self.patcher.patch_stage_oarc(
                         stage, patch["layer"], patch["oarc"], patch["func"]
                     )
-
         for (stage, layer), oarcs in self.stageoarcs.items():
             self.patcher.add_stage_oarc(stage, layer, oarcs)
         for (stage, layer), oarcs in remove_stageoarcs.items():
@@ -2661,7 +2734,6 @@ class GamePatcher:
     def add_rando_hash(self):
         if not "002-System" in self.eventpatches:
             self.eventpatches["002-System"] = []
-
         self.eventpatches["002-System"].append(
             {
                 "name": "Rando hash on file select",
@@ -2854,7 +2926,6 @@ class GamePatcher:
             types_to_shuffle = {"Tears", "Light Fruits", "Relics"}
         elif shuffle_option == "Full":
             types_to_shuffle = {"Tears", "Light Fruits", "Relics", "Stamina Fruits"}
-
         for trial in TRIAL_OBJECT_IDS:
             params = []
             locs = []
@@ -2869,7 +2940,6 @@ class GamePatcher:
                         params.append((0x07FE00 | (i << 24) | item_id, "Item"))
                 else:
                     params.extend([ITEM_PARAM_MAP[item_type]] * len(objlist))
-
             rng = random.Random(self.placement_file.trial_object_seed)
             rng.shuffle(locs)
             if "Relics" not in types_to_shuffle:
@@ -2885,14 +2955,17 @@ class GamePatcher:
 
             # shuffle the location -> params mapping to then patch a random
             # sample of relics with items
+
             rng.shuffle(loc_params)
 
             trial_relic_patches = self.trialrelicpatches[trial].copy()
             for (id, room), (params, actor_name) in loc_params:
                 # replace the dusk relic objects with randomized items
+
                 if trial_relic_patches and actor_name == "AncJwls":
                     (sceneflag, itemid) = trial_relic_patches.pop()
                     # 9 is the rando item subtype forcing a textbox
+
                     params1 = 0xFF9C0200
                     params1 = mask_shift_set(params1, 0xFF, 10, sceneflag)
                     params1 = mask_shift_set(params1, 0xFF, 0, itemid)
@@ -2933,10 +3006,8 @@ class GamePatcher:
 
         if not stagepatches:
             return None
-
         for patch in stagepatches:
             brres = patch["func"](brres)
-
         return brres
 
     def patch_sandship_puzzle(self, brres: BRRES):
@@ -2946,6 +3017,7 @@ class GamePatcher:
         # we know there are some wheels here and they each have the same number of vertices,
         # but unfortunately the vertices are a bit shuffled. So we identify them via
         # their distance to the respective center
+
         radius_sq = 300**2
         dist_sq = (
             lambda c, v: (v[0] - c[0]) ** 2 + (v[1] - c[1]) ** 2 + (v[2] - c[2]) ** 2
@@ -2978,7 +3050,6 @@ class GamePatcher:
                     old[1] - old_center[1] + new_center[1],
                     old[2] - old_center[2] + new_center[2],
                 ]
-
         mdl.set_vertices("polySurface3711483__A_D301_HintMark_b01_1", new_vertices)
 
         vertices = mdl.get_vertices("pCylinder941__A_HintMark00")
@@ -2998,6 +3069,7 @@ class GamePatcher:
                 uz_ = vertex[2] - center[2]
                 # todo maybe use numpy
                 # yes this is left handed
+
                 ux = ux_ * math.cos(angle) + uz_ * math.sin(angle)
                 uz = -ux_ * math.sin(angle) + uz_ * math.cos(angle)
                 new_vertices[vertex_idx] = [
@@ -3039,7 +3111,6 @@ class GamePatcher:
             for i in range(3):
                 for j in range(3):
                     new_vertices[new_comp[j][i]] = vertices[comp[j][i]]
-
         mdl.set_vertices("polySurface372042__A_Ceiling04_m", new_vertices)
 
         brres.set_file_data("3DModels(NW4R)/model0", mdl)
@@ -3056,10 +3127,10 @@ class GamePatcher:
         if rhand == lhand and (rhand == 0 or rhand == 2):
             # we can only rotate by 180 degrees or not at all due to a non-square UV
             # changing the vertices is not an option either since the surface isn't flat
+
             pass
         else:
             raise ValueError(f"incompatible rotations {rhand} {lhand}")
-
         brres = BRRES.parse_brres(BytesIO(u8.get_file_data("g3d/model.brres")))
 
         mdl: MDL0 = brres.get_file_data("3DModels(NW4R)/TowerHandD101")
@@ -3069,6 +3140,7 @@ class GamePatcher:
         new_uv = uv_coords.copy()
         nd = np.array(new_uv)
         # find bounding box
+
         xmax = np.max(nd[:, 0])
         ymax = np.max(nd[:, 1])
         xmin = np.min(nd[:, 0])
@@ -3085,13 +3157,13 @@ class GamePatcher:
             uy_ = coord[1] - center[1]
             # note: handedness of this transformation can't be verified
             # since only 180 degrees rotations are supported
+
             ux = ux_ * math.cos(angle) + uy_ * math.sin(angle)
             uy = -ux_ * math.sin(angle) + uy_ * math.cos(angle)
             new_uv[idx] = [
                 int(ux + center[0]),
                 int(uy + center[1]),
             ]
-
         mdl.set_uvs("#9", new_uv)
 
         brres.set_file_data("3DModels(NW4R)/TowerHandD101", mdl)
@@ -3106,17 +3178,20 @@ class GamePatcher:
         mdl: MDL0 = brres.get_file_data(model_name)
 
         # North to south
+
         xz = [
             [4930.0, 0, -21000.0],  # 1 robot
             [4930.0, 0, -20000.0],  # 3 robots
             [4930.0, 0, -19000.0],  # 2 robots
         ]
         # low to high
+
         num_robots = [0, 2, 1]
 
         plate_vertices = mdl.get_vertices(plate_verts)
         new_plate_vertices = plate_vertices.copy()
         # unfortunately we have to move the walls above the plates too
+
         wall_vertices = mdl.get_vertices(wall_verts)
         new_wall_vertices = wall_vertices.copy()
 
@@ -3153,7 +3228,6 @@ class GamePatcher:
                     old[1],
                     old[2] - old_center[2] + new_center[2],
                 ]
-
             wall_vertex_index_list = wall_vertex_index_lists[plate_idx]
             for vertex in wall_vertex_index_list:
                 old = wall_vertices[vertex]
@@ -3162,7 +3236,6 @@ class GamePatcher:
                     old[1],
                     old[2] - old_center[2] + new_center[2],
                 ]
-
         mdl.set_vertices(plate_verts, new_plate_vertices)
         mdl.set_vertices(wall_verts, new_wall_vertices)
 
@@ -3172,6 +3245,7 @@ class GamePatcher:
     def patch_lmf_switches_puzzle(self, brres: BRRES):
         """Patches the LMF boss key switches puzzle by moving the stacked robot walls"""
         # present
+
         brres = self.patch_lmf_switches_puzzle_inner(
             brres,
             "3DModels(NW4R)/model0",
@@ -3179,6 +3253,7 @@ class GamePatcher:
             "polySurface3710781__A_Wall3N",
         )
         # past
+
         brres = self.patch_lmf_switches_puzzle_inner(
             brres,
             "3DModels(NW4R)/model_obj8",
@@ -3248,6 +3323,7 @@ class GamePatcher:
                 continue
             if "index" in obj:
                 # check index, just to verify index based lists don't have a mistake in them
+
                 if layer is None:
                     objlist = bzs.get(objtype, [])
                 else:
@@ -3272,6 +3348,7 @@ class GamePatcher:
                     bzs["LAY "][f"l{layer}"][objtype] = []
                 objlist = bzs["LAY "][f"l{layer}"][objtype]
             # add object name to objn if it's some kind of actor
+
             if objtype in [
                 "SOBS",
                 "SOBJ",
@@ -3283,6 +3360,7 @@ class GamePatcher:
                 "DOOR",
             ]:
                 # TODO: this only works if the layer is set
+
                 if not "OBJN" in bzs["LAY "][f"l{layer}"]:
                     bzs["LAY "][f"l{layer}"]["OBJN"] = []
                 objn = bzs["LAY "][f"l{layer}"]["OBJN"]
@@ -3349,8 +3427,8 @@ class GamePatcher:
                     bzs["LAY "][f"l{layer}"]["OBJN"] = []
                 objlist = bzs["LAY "][f"l{layer}"]["OBJN"]
             objlist.append(name_to_add)
-
         # patch randomized items on stages
+
         for objname, layer, objid, itemid, dowsing in self.rando_stagepatches.get(
             (stage, room), []
         ):
@@ -3361,9 +3439,9 @@ class GamePatcher:
                 )
             else:
                 RANDO_PATCH_FUNCS[objname](bzs["LAY "][f"l{layer}"], itemid, objid)
-
         if modified:
             # print(json.dumps(bzs))
+
             return bzs
         else:
             return None
@@ -3374,9 +3452,11 @@ class GamePatcher:
         flowpatches = list(filter(self.filter_option_requirement, flowpatches))
 
         # dictionary to map flow labels to ids for new flows
+
         label_to_index = OrderedDict()
         next_index = len(msbf["FLW3"]["flow"])
         # fist, fill in all the flow name to index mappings
+
         for command in filter(
             lambda x: x["type"] in ["flowadd", "switchadd"], flowpatches
         ):
@@ -3386,6 +3466,7 @@ class GamePatcher:
             flowobj = msbf["FLW3"]["flow"][command["index"]]
             for key, val in command.get("flow", {}).items():
                 # special case: next points to a label
+
                 if key == "next" and not isinstance(val, int):
                     index = label_to_index.get(val, None)
                     if index is None:
@@ -3395,6 +3476,7 @@ class GamePatcher:
                         continue
                     val = index
                 # special case: text points to a label, textindex is param4
+
                 if key == "param4" and not isinstance(val, int):
                     index = self.text_labels.get(val, None)
                     if index is None:
@@ -3406,6 +3488,7 @@ class GamePatcher:
                 flowobj[key] = val
             if flowobj["type"] == "switch":
                 # patch cases if given
+
                 cases = command.get("cases", None)
                 if cases:
                     assert len(cases) == flowobj["param4"]  # param4 is number of cases
@@ -3420,6 +3503,7 @@ class GamePatcher:
                         # print(f'set {branch_start+i} to {case}')
                     # print(flowobj)
             # print(f'patched flow {command["index"]}, {filename}')
+
             modified = True
         for command in filter(
             lambda x: x["type"] in ["flowadd", "switchadd"], flowpatches
@@ -3439,6 +3523,7 @@ class GamePatcher:
             )
             for key, val in command["flow"].items():
                 # special case: next points to a label
+
                 if key == "next" and not isinstance(val, int):
                     index = label_to_index.get(val, None)
                     if index is None:
@@ -3448,6 +3533,7 @@ class GamePatcher:
                         continue
                     val = index
                 # special case: text points to a label, textindex is param4
+
                 if key == "param4" and not isinstance(val, int):
                     index = self.text_labels.get(val, None)
                     if index is None:
@@ -3493,12 +3579,15 @@ class GamePatcher:
             bucket = entrypoint_hash(command["entry"]["name"], len(msbf["FEN1"]))
             msbf["FEN1"][bucket].append(new_entry)
             # print(f'added flow entry {command["entry"]["name"]}, {filename}')
+
             modified = True
         if filename == "003-ItemGet":
             # make progressive mitts
+
             make_progressive_item(msbf, 93, [35, 231], [56, 99], [904, 905])
             # make progressive swords
             # TODO trainings and goddess sword both set storyflags on their own, could reuse those
+
             make_progressive_item(
                 msbf,
                 136,
@@ -3507,20 +3596,26 @@ class GamePatcher:
                 ITEM_STORY_FLAGS[PROGRESSIVE_SWORD],
             )
             # make progressive beetle - msbf, base item, item text, item id, storyflags
+
             make_progressive_item(
                 msbf, 96, [38, 178, 177, 176], [53, 75, 76, 77], [912, 913, 942, 943]
             )
             # make progressive bow
+
             make_progressive_item(
                 msbf, 127, [68, 163, 162], [19, 90, 91], [944, 945, 946]
             )
             # make progressive slingshot
+
             make_progressive_item(msbf, 97, [39, 237], [52, 105], [947, 948])
             # make progressive bug net
+
             make_progressive_item(msbf, 20, [18, 309], [71, 140], [949, 950])
             # make progressive pouch
+
             make_progressive_item(msbf, 258, [254, 253], [112, 113], [931, 932])
             # make progressive wallets
+
             make_progressive_item(
                 msbf,
                 250,
@@ -3529,11 +3624,12 @@ class GamePatcher:
                 [915, 916, 917, 918],
             )
             modified = True
-
         # patch randomized items
+
         for evntline, itemid in self.rando_eventpatches.get(filename, []):
             try:
                 # can either be a label or a number
+
                 evntline = int(evntline)
             except ValueError:
                 index = label_to_index.get(evntline, None)
@@ -3545,7 +3641,6 @@ class GamePatcher:
             modified = True
             msbf["FLW3"]["flow"][evntline]["param2"] = itemid
             msbf["FLW3"]["flow"][evntline]["param3"] = 9  # give item command
-
         if modified:
             return msbf
         else:
@@ -3556,6 +3651,7 @@ class GamePatcher:
         #     for lbl in lbl_list:
         #         hash_b = entrypoint_hash(lbl['name'], len(msbt['LBL1']))
         #         print(f'smile: {bucket} {hash_b}')
+
         assert len(msbt["TXT2"]) == len(msbt["ATR1"])
         modified = False
         textpatches = self.eventpatches.get(filename, [])
@@ -3565,6 +3661,7 @@ class GamePatcher:
                 command["text"]
             ).encode("utf-16be")
             # print(f'patched text {command["index"]}, {filename}')
+
             modified = True
         for command in filter(lambda x: x["type"] == "textadd", textpatches):
             index = len(msbt["TXT2"])
@@ -3575,6 +3672,7 @@ class GamePatcher:
             msbt["ATR1"].append([command.get("unk1", 1), command.get("unk2", 0)])
             # the game doesn't care about the name, but it has to exist and be unique
             # only unique within a file but whatever
+
             entry_name = "%s:%d" % (filename[-3:], index)
             new_entry = OrderedDict(
                 name=entry_name,
@@ -3583,6 +3681,7 @@ class GamePatcher:
             bucket = entrypoint_hash(entry_name, len(msbt["LBL1"]))
             msbt["LBL1"][bucket].append(new_entry)
             # print(f'added text {index}, {filename}')
+
             modified = True
         if modified:
             return msbt
@@ -3592,6 +3691,7 @@ class GamePatcher:
     def do_dol_patch(self):
         self.progress_callback("patching main.dol...")
         # patch main.dol
+
         dol_bytes = BytesIO(
             (
                 self.patcher.actual_extract_path / "DATA" / "sys" / "main.dol"
@@ -3602,6 +3702,7 @@ class GamePatcher:
         apply_dol_patch(self, dol, self.all_asm_patches["main.dol"])
         # do startflags, each entry is a u16, different flag types are terminated by 0xFFFF
         # first storyflags, then itemflags, then sceneflags (first byte area, second byte flag)
+
         start_flags_write = BytesIO()
         storyflag_writer = get_storyflag_writer()
         for flag in self.startstoryflags:
@@ -3613,6 +3714,7 @@ class GamePatcher:
         storyflag_writer.set_flag(953, self.starting_tadtones)
 
         # itemflags
+
         itemflag_writer = get_itemflag_writer()
         for flag, count in self.startitemflags.items():
             assert flag < 0x1FF
@@ -3620,38 +3722,45 @@ class GamePatcher:
         if self.max_starting_bugs:
             for bugcounter in range(10, 22):
                 # counter
+
                 itemflag_writer.set_flag(431 + bugcounter, 99)
                 # flag
+
                 if bugcounter == 12:
                     # ss doing ss things
+
                     storyflag_writer.set_flag(122, 1)
                 else:
                     itemflag_writer.set_flag(131 + bugcounter, 1)
         if self.max_starting_treasures:
             for treasurecounter in range(22, 38):
                 # counter
+
                 itemflag_writer.set_flag(399 + treasurecounter, 99)
                 # flag
-                storyflag_writer.set_flag(0x2F1 - 22 + treasurecounter, 1)
 
+                storyflag_writer.set_flag(0x2F1 - 22 + treasurecounter, 1)
         storyflag_writer.write_to(start_flags_write)
         itemflag_writer.write_to(start_flags_write)
         # dungeonflags
+
         start_flags_write.write(bytes(self.startdungeonflags))
 
         start_flags_write.write(struct.pack(">B", self.starting_full_hearts))
 
         # Starting shield and bottles
         ## Last 3 bits for starting bottles.
+
         additional_start_options_2 = self.starting_bottles
 
         ## Next 1 bit for starting Hylian Shield.
+
         if self.start_with_hylian_shield:
             additional_start_options_2 = additional_start_options_2 | (1 << 3)
-
         start_flags_write.write(struct.pack(">B", additional_start_options_2))
 
         # sceneflags
+
         for flagregion, flags in (
             self.patches["global"].get("startsceneflags", {}).items()
         ):
@@ -3665,6 +3774,7 @@ class GamePatcher:
                         self.placement_file.required_dungeons,
                     ):
                         # flag should not be set according to options
+
                         continue
                     filtered_flags.append(flag["flag"])
                 else:
@@ -3681,9 +3791,11 @@ class GamePatcher:
                 f"Not enough space to fit in all of the startflags, need {startflag_byte_count}, but only 512 bytes available."
             )
         # print(f"total startflag byte count: {startflag_byte_count}")
+
         dol.write_data_bytes(0x804EE1B8, start_flags_write.getbuffer())
 
         # write startstage (used for ER) to some unused space
+
         start_entrance = self.placement_file.start_entrance
 
         # HARDCODE STARTING ENTRANCE HERE
@@ -3710,6 +3822,7 @@ class GamePatcher:
         )
 
         # Hero Mode Changes
+
         fine_grained_hero_mode_options = 0
 
         if self.placement_file.options["fast-air-meter"]:
@@ -3718,7 +3831,6 @@ class GamePatcher:
             fine_grained_hero_mode_options |= 0b001
         if not self.placement_file.options["enable-heart-drops"]:
             fine_grained_hero_mode_options |= 0b100
-
         dol.write_data(
             write_u8,
             self.custom_symbols["main.dol"]["HERO_MODE_OPTIONS"],
@@ -3770,6 +3882,7 @@ class GamePatcher:
         # shopsanity patches
         # 24, 17, 18 is patched extra wallet chain
         # patches the next value in the shop item chain
+
         shop_item_next_patches = {
             24: 17,
             17: 18,
@@ -3810,6 +3923,7 @@ class GamePatcher:
             current_shop_entry_offset = shop_list_offset + ENTRY_SIZE * shopindex
 
             # Buy Decide Scale
+
             write_float(
                 data_bytes,
                 current_shop_entry_offset + 0x0,
@@ -3817,6 +3931,7 @@ class GamePatcher:
             )
 
             # Put Scale
+
             write_float(
                 data_bytes,
                 current_shop_entry_offset + 0x4,
@@ -3824,35 +3939,39 @@ class GamePatcher:
             )
 
             # Target Height Offset
+
             target_height = shop_target_height_patches.get(shopindex, None)
             if not target_height is None:
                 write_float(data_bytes, current_shop_entry_offset + 0x8, target_height)
-
             # Item ID
+
             write_u16(data_bytes, current_shop_entry_offset + 0xC, itemid)
 
             # Price
+
             shop_price = shop_price_patches.get(shopindex, None)
             if not shop_price is None:
                 write_u16(data_bytes, current_shop_entry_offset + 0xE, shop_price)
-
             # Entrypoint
+
             shop_entrypoint = shop_entrypoint_patches.get(shopindex, None)
             if not shop_entrypoint is None:
                 write_u16(data_bytes, current_shop_entry_offset + 0x10, shop_entrypoint)
-
             # Next Item
+
             shop_item_next = shop_item_next_patches.get(shopindex, None)
             if not shop_item_next is None:
                 write_u16(data_bytes, current_shop_entry_offset + 0x12, shop_item_next)
-
             # Arcname
+
             write_str(data_bytes, current_shop_entry_offset + 0x16, arcname, 30)
 
             # Modelname
+
             write_str(data_bytes, current_shop_entry_offset + 0x34, modelname, 30)
 
             # Height
+
             write_float(
                 data_bytes,
                 current_shop_entry_offset + 0x4C,
@@ -3860,15 +3979,18 @@ class GamePatcher:
             )
 
             # Storyflag
+
             sold_out_storyflag = sold_out_storyflag_patches.get(shopindex, None)
             if not sold_out_storyflag is None:
                 # normally not part of the struct, but the last 2 bytes of the modelname aren't used, so use them for storyflags
+
                 write_u16(
                     data_bytes, current_shop_entry_offset + 0x52, sold_out_storyflag
                 )
 
     def do_patch_title_screen_logo(self):
         # patch title screen logo
+
         title_2D_path = (
             self.modified_extract_path
             / "DATA"
@@ -3885,6 +4007,7 @@ class GamePatcher:
 
     def do_patch_custom_dowsing_images(self):
         # patch propeller dowsing image; used for chest dowsing
+
         do_button_path = (
             self.modified_extract_path
             / "DATA"
@@ -3911,9 +4034,11 @@ class GamePatcher:
             assert flag is not None
             if flag_space == "Story":
                 # Add start storyflag
+
                 self.startstoryflags.append(flag)
             else:
                 # Add start sceneflag
+
                 self.patches["global"]["startsceneflags"].setdefault(
                     flag_space, []
                 ).append(flag)
