@@ -91,7 +91,7 @@ class AllPatcher:
 
     def add_stage_oarc(self, stage: str, layer: int, oarcs: Iterable[str]):
         self.stage_oarc_add[(stage, layer)] = oarcs
-    
+
     def patch_stage_oarc(
         self,
         stage: str,
@@ -451,7 +451,7 @@ class AllPatcher:
                             roomid = int(room_path_match.group("roomid"))
                             roomdata = stageu8.get_file_data(room_path_match.group(0))
                             roomarc = U8File.parse_u8(BytesIO(roomdata))
-                            
+
                             if self.bzs_patch:
                                 roombzs = parseBzs(
                                     roomarc.get_file_data("dat/room.bzs")
