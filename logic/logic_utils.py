@@ -66,7 +66,6 @@ class LogicUtils(Logic):
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         if not full_inventory[DEMISE_BIT]:
             raise useroutput.GenerationFailed(f"Could not reach Demise.")
-
         full_inventory = Logic.fill_inventory(self.requirements, Inventory(BANNED_BIT))
 
         if not full_inventory[EVERYTHING_BIT]:
@@ -74,14 +73,12 @@ class LogicUtils(Logic):
             i = next(iter(everything_req.intset - full_inventory.intset))
             check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
             raise useroutput.GenerationFailed(f"Could not reach check {check}.")
-
         if not all(item in self.placement.locations for item in self.areas.checks):
             check = next(iter(set(self.areas.checks) - set(self.placement.locations)))
             check_name = self.areas.full_to_short(check)
             raise useroutput.GenerationFailed(
                 f"Check {check_name} has not been assigned an item."
             )
-
         if not all(item in self.placement.items for item in INVENTORY_ITEMS):
             item = next(iter(set(INVENTORY_ITEMS) - set(self.placement.items)))
             raise useroutput.GenerationFailed(
@@ -94,7 +91,6 @@ class LogicUtils(Logic):
         for index, e in enumerate(reversed(bin(banned_intset))):
             if e == "1":
                 custom_requirements[index] = DNFInventory(False)
-
         return Logic.fill_inventory(custom_requirements, inventory)
 
     def fill_restricted(
@@ -104,11 +100,9 @@ class LogicUtils(Logic):
     ):
         if starting_inventory is None:
             starting_inventory = self.inventory
-
         banned_intset = 0
         for i in banned_indices:
             banned_intset |= 1 << i
-
         return self._fill_for_test(banned_intset, starting_inventory)
 
     def restricted_test(
@@ -127,13 +121,10 @@ class LogicUtils(Logic):
             self.aggregated_reqs: List[None | bool | Inventory] = [
                 None for _ in self.requirements
             ]
-
         if item in self._isvisited_agg:
             return False
-
         if self.aggregated_reqs[item] is not None:
             return self.aggregated_reqs[item]
-
         self._isvisited_agg.add(item)
         aggregate = False
         for possibility, (_, conj_pre) in self.requirements[item].disjunction.items():
@@ -148,11 +139,9 @@ class LogicUtils(Logic):
                     aggregate = aggregate_
                 else:
                     aggregate &= aggregate_
-
         self._isvisited_agg.remove(item)
         if not self._isvisited_agg:
             self.aggregated_reqs[item] = aggregate
-
         return aggregate
 
     @cache
@@ -187,12 +176,10 @@ class LogicUtils(Logic):
         for item in self.get_sots_items(index):
             if self.placement.item_placement_limit.get(item, ""):
                 continue
-
             sots_loc = self.placement.items[item]
 
             if sots_loc == START_ITEM:
                 continue
-
             hint_region = self.areas.checks[sots_loc]["hint_region"]
             yield (hint_region, sots_loc, item)
 
@@ -249,7 +236,6 @@ class LogicUtils(Logic):
                 if (region := c.get("cube_region")) is None:
                     region = c["hint_region"]
                 checks_per_region[region] += 1
-
         return (
             {k: v for k in useless_regions if (v := checks_per_region[k]) > 0},
             [k for k, v in checks_per_region.items() if v == 0],
@@ -301,6 +287,7 @@ class LogicUtils(Logic):
         # 6: Look around (not usable afaik)
         # 7: Treasure
         # 8: None
+
         if dowsing_setting == "Vanilla":
             dowse = lambda v: 8
         elif dowsing_setting == "All Chests":
@@ -321,14 +308,18 @@ class LogicUtils(Logic):
 
     def get_importance_for_item(self, item):
         # Skip trivially unrequired items
+
         if item not in self.get_useful_items():
             return HINT_IMPORTANCE.Null
         # Then check if the item is SotS
+
         if item in self.get_sots_items():
             return HINT_IMPORTANCE.Required
         # Then check if the item is considered useful for Demise; ultimately unrequired items will not count
+
         elif item in self.get_useful_items(EXTENDED_ITEM[self.short_to_full(DEMISE)]):
             return HINT_IMPORTANCE.PossiblyRequired
         # The item must now be not required
+
         else:
             return HINT_IMPORTANCE.NotRequired

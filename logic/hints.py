@@ -44,14 +44,12 @@ class Hints:
 
             if does_hint:
                 self.hinted_checks.append(check)
-
             status = self.logic.get_importance_for_item(item)
 
             if self.options["hint-importance"]:
                 importance = status
             else:
                 importance = HINT_IMPORTANCE.Null
-
             self.hints[hintname] = hintcls(
                 hintmodes[status], hintname, item, importance
             )
@@ -83,7 +81,6 @@ class Hints:
             }
         else:
             raise ValueError(f'Unknown value for setting "song-hints": "{hint_mode}".')
-
         does_hint = hint_mode != "None"
         get_check = lambda trial_gate: self.norm(
             SILENT_REALM_CHECKS[self.logic.randomized_trial_entrance[trial_gate]]
@@ -99,19 +96,18 @@ class Hints:
         def get_hint_pool(check):
             if not (hint := check.get("hint", None)):
                 return None
-
             if type(hint) == str:
                 # simple hint type, e.g. hint: always
-                return hint
 
+                return hint
             # the always condition is always checked first!
+
             for pool in ["always", "sometimes"]:
                 condition = hint.get(pool, None)
                 if condition and check_static_option_req(
                     condition, self.options, self.logic.required_dungeons
                 ):
                     return pool
-
             return None
 
         check_hint_status = {
@@ -121,6 +117,7 @@ class Hints:
         }
 
         # ensure prerandomized and banned locations cannot be hinted
+
         not_banned = self.logic.fill_restricted()
         banned_locs = [
             loc
@@ -162,6 +159,7 @@ class Hints:
         for _, hintlist in placed_hintstone_hints.items():
             if not hintlist.hints:
                 # make sure there are no empty textboxes
+
                 hintlist.hints = [EmptyHint("I have nothing to tell you")]
         self.logic.placement.hints = (
             placed_fi_hints | placed_hintstone_hints | non_hintstone_hints
@@ -175,9 +173,7 @@ class Hints:
                 hint_req = DNFInventory(hint_bit)
                 self.logic.backup_requirements[itembit] &= hint_req
                 self.logic.requirements[itembit] &= hint_req
-
             self.logic.inventory |= hint_bit
-
         self.logic.aggregate = self.logic.aggregate_requirements(
             self.logic.requirements, None
         )
@@ -209,15 +205,14 @@ class Hints:
             result = self.logic.place_item(stone, hintname, hint_mode=True)
             assert result  # Undefined if False
             return True
-
         # We have to replace an already placed hint
+
         if depth > 50:
             return False
         if not accessible_stones:
             raise self.useroutput.GenerationFailed(
                 f"No more locations accessible for {hintname}."
             )
-
         spots = [
             (stone, old_hint)
             for stone in accessible_stones
