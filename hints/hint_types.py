@@ -135,13 +135,11 @@ class LocationHint(RegularHint):
     def to_stone_text(self, norm) -> str:
         if override := self.location_name_override:
             return f"They say that {override} <y<{norm(self.item)}>>{format_importance(self.importance, True)}."
-
         return f"They say that <r<{norm(self.location)}>> has <y<{norm(self.item)}>>{format_importance(self.importance, True)}."
 
     def to_fi_text(self, norm) -> str:
         if override := self.location_name_override:
             return f"My readings suggest that {override} <y<{norm(self.item)}>>."
-
         return f"My readings suggest that {override} <y<{norm(self.item)}>>{format_importance(self.importance, True)}."
 
     def to_spoiler_log_text(self, norm) -> str:
@@ -216,13 +214,11 @@ class SotsGoalHint(LocationHint):
     def to_stone_text(self, norm) -> str:
         if self.goal is not None:
             return f"The servant of the goddess who wishes to vanquish <ye<{self.goal}>> shall venture to <r<{self.zone}>>."
-
         return f"The <b+<Spirit of the Sword>> guides the goddess' chosen hero to <r<{self.zone}>>."
 
     def to_fi_text(self, norm) -> str:
         if self.goal is not None:
             return f"I conjecture that travelling to <r<{self.zone}>> will help you defeat <ye<{self.goal}>>."
-
         return (
             f"I recommend travelling to <r<{self.zone}>> to <b+<fulfill your destiny>>."
         )
@@ -255,13 +251,11 @@ class CubeSotsGoalHint(LocationHint):
     def to_stone_text(self, norm) -> str:
         if self.goal is not None:
             return f"The servant of the goddess who wishes to vanquish <ye<{self.goal}>> shall unite <r<{self.cube_zone}>> with the skies."
-
         return f"The <ye<goddess>> left a sacred gift for the hero who unites <r<{self.cube_zone}>> with the skies."
 
     def to_fi_text(self, norm) -> str:
         if self.goal is not None:
             return f"I conjecture that uniting <r<{self.cube_zone}>> with the skies will help you defeat <ye<{self.goal}>>."
-
         return f"I recommend uniting <r<{self.cube_zone}>> with the skies to <ye<fulfill your destiny>>."
 
     def to_spoiler_log_text(self, norm) -> str:
